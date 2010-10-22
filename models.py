@@ -43,7 +43,7 @@ class Word(db.Model):
     description = db.TextProperty(required=False, indexed=False)
     synonyms = db.ListProperty(unicode)
     antonyms = db.ListProperty(unicode)
-    contributor = db.UserProperty(required=True)
+    contributor = db.UserProperty(required=False)
 
     @classmethod
     def all_by_dictionary(cls, dict):
@@ -53,7 +53,7 @@ class Word(db.Model):
 NEW, ACCEPTED, REJECTED, CLOSE = 0, 1, 2, 3
 EDIT_STATES = [NEW, ACCEPTED, REJECTED, CLOSE]
 
-class WordEdit(db.Model):
+class WordComment(db.Model):
     """
     Edit or comment on an existing word.
     """

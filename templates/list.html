@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}List{% endblock %}
+{% block content %}
+{% regroup words by bangla as word_list %}
+<dl>
+	{% for word in word_list %}
+	<dl>{{ word.grouper }}</dl>
+	<dt><ul>
+		{% for item in word.list %}
+		<li>
+		{% ifchanged %}[{{ item.phoneme }}]{% endifchanged %} ({{ item.pos }}) {{ item.english }}
+		<p>{{ item.description }}</p>
+		<p>
+			<b>Synonyms:</b>
+			{% for synonym in item.synonyms %}
+			{{ synonym }},
+			{% endfor %}
+			</p>
+			<p>
+			<b>Antonyms:</b>
+			{% for antonym in item.antonys %}
+			{{ antonym }},
+			{% endfor %}
+			</p>
+			<a href="/comments?id={{ item.key.id }}">Comments</a>
+			{% ifequal user item.contributor %}
+			<a href="/input?id={{ item.key.id }}">Edit</a>
+			{% endifequal %}
+		</li>
+		{% endfor %}
+	</ul></dt>
+	{% endfor %}
+</dl>
+{% endblock %}

@@ -21,6 +21,7 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util, template
 from google.appengine.api import users
 
+from models import Word
 from forms import WordForm
 
 TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), 'templates')
@@ -32,7 +33,7 @@ def render(template_name, template_values={}):
         auth = {'admin': users.is_current_user_admin(), 'auth_url':
                 users.create_logout_url('/')}
     else:
-        auth = {'auth_url': users.create_login_url('/input')}
+        auth = {'auth_url': users.create_login_url('/')}
 
     template_values.update({'user': users.get_current_user()})
     template_values.update(auth)
@@ -50,15 +51,25 @@ class MainHandler(webapp.RequestHandler):
 
 class InputHandler(webapp.RequestHandler):
     """ input page """
+    def _get_instance(self):
+        _id = self.request.GET.get('id', None)
+        if _id:
+            self.instance = Word.get_by_id(long(_id))
+        else:
+            self.instance = None
+
     def get(self):
-        form = WordForm(initial={'contributor': users.get_current_user()})
+        self._get_instance()
+        form = WordForm(instance=self.instance)
         html = render('input.html', {'form': form})
         self.response.out.write(html)
 
     def post(self):
-        form = WordForm(data=self.request.POST)
+        self._get_instance()
+        form = WordForm(data=self.request.POST, instance=self.instance)
         if form.is_valid():
             entity = form.save(commit=False)
+            entity.contributor = users.get_current_user()
 
             synonyms = self.request.POST.get('synonyms', None)
             if synonyms:
@@ -69,12 +80,19 @@ class InputHandler(webapp.RequestHandler):
                 entity.antonyms = [w.strip() for w in antonyms.split(',')]
 
             entity.put()
-            form = WordForm(initial={'contributor': users.get_current_user()})
+            self.redirect('/input')
         else:
             pass
         html = render('input.html', {'form': form})
         self.response.out.write(html)
 
+class ListHandler(webapp.RequestHandler):
+    """ list words """
+    def get(self):
+        dictionary = int(self.request.GET.get('dict', 0))
+        words = Word.all_by_dictionary(dictionary).order('bangla')
+        html = render('list.html', {'words': words})
+        self.response.out.write(html)
 
 class AdminHandler(webapp.RequestHandler):
     """ admin page """
@@ -83,6 +101,7 @@ class AdminHandler(webapp.RequestHandler):
 
 def main():
     routes = [('/', MainHandler),
+              ('/list', ListHandler),
               ('/input', InputHandler),
               ('/admin', AdminHandler),
              ]
