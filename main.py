@@ -15,21 +15,69 @@
 # limitations under the License.
 #
 import os
+import logging
 
 from google.appengine.ext import webapp
-from google.appengine.ext.webapp import util
+from google.appengine.ext.webapp import util, template
+from google.appengine.api import users
+
+from forms import WordForm
+
+TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), 'templates')
+
+def render(template_name, template_values={}):
+    """ render a django template """
+    user = users.get_current_user()
+    if user:
+        auth = {'admin': users.is_current_user_admin(), 'auth_url':
+                users.create_logout_url('/')}
+    else:
+        auth = {'auth_url': users.create_login_url('/input')}
+
+    template_values.update({'user': users.get_current_user()})
+    template_values.update(auth)
+
+    template_path = os.path.join(TEMPLATE_DIR, template_name)
+    return template.render(template_path, template_values)
 
 
 class MainHandler(webapp.RequestHandler):
+    """ main page """
     def get(self):
-        self.response.out.write('Hello world!')
+        html = render('index.html')
+        self.response.out.write(html)
 
 
 class InputHandler(webapp.RequestHandler):
+    """ input page """
     def get(self):
-        self.response.out.write('Hello input!')
+        form = WordForm(initial={'contributor': users.get_current_user()})
+        html = render('input.html', {'form': form})
+        self.response.out.write(html)
+
+    def post(self):
+        form = WordForm(data=self.request.POST)
+        if form.is_valid():
+            entity = form.save(commit=False)
+
+            synonyms = self.request.POST.get('synonyms', None)
+            if synonyms:
+                entity.synonyms = [w.strip() for w in synonyms.split(',')]
+
+            antonyms = self.request.POST.get('antonyms', None)
+            if antonyms:
+                entity.antonyms = [w.strip() for w in antonyms.split(',')]
+
+            entity.put()
+            form = WordForm(initial={'contributor': users.get_current_user()})
+        else:
+            pass
+        html = render('input.html', {'form': form})
+        self.response.out.write(html)
+
 
 class AdminHandler(webapp.RequestHandler):
+    """ admin page """
     def get(self):
         self.response.out.write('Hello admin!')
 

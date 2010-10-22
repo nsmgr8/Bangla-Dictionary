@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Input{% endblock %}
+{% block content %}
+<form method='POST' action=''>
+	<table>
+		{{ form }}
+		<tr>
+			<th><label for='id_synonyms'>Synonyms:</label></th>
+			<td><input type="text" name="synonyms" id="id_synonyms" value="" /></td>
+			<td>Use comma to separate words.</td>
+		</tr>
+		<tr>
+			<th><label for='id_antonyms'>Antonyms:</label></th>
+			<td><input type="text" name="antonyms" id="id_antonyms" value="" /></td>
+			<td>Use comma to separate words.</td>
+		</tr>
+	</table>
+	<input type="submit" name="submit" value="Submit" />
+</form>
+{% endblock %}

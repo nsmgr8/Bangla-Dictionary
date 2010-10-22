@@ -16,6 +16,11 @@
 
 from google.appengine.ext import db
 
+BENG_ENG, ENG_BENG = 0, 1
+DICTIONARIES = [BENG_ENG, ENG_BENG]
+DICTIONARIES_NAME = [(BENG_ENG, 'Bangla to English'),
+                     (ENG_BENG, 'English to Bangla')]
+
 class Word(db.Model):
     """
     The main model to store the word definitions.
@@ -28,14 +33,16 @@ class Word(db.Model):
         description: Optional description, example of the word
         contributor: user who first entried it first
     """
-    dictionary = db.StringProperty(required=True)
+    dictionary = db.IntegerProperty(required=True, choices=DICTIONARIES,
+                                    default=BENG_ENG)
     bangla = db.StringProperty(required=True)
     english = db.StringProperty(required=True)
     phoneme = db.StringProperty(required=False, indexed=False)
-    pos = db.StringProperty(required=True, indexed=False)
+    pos = db.StringProperty(required=True, indexed=False,
+                            verbose_name='Parts of Speech')
     description = db.TextProperty(required=False, indexed=False)
-    synonyms = db.ListProperty(required=False)
-    antonyms = db.ListProperty(required=False)
+    synonyms = db.ListProperty(unicode)
+    antonyms = db.ListProperty(unicode)
     contributor = db.UserProperty(required=True)
 
     @classmethod
