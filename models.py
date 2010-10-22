@@ -44,9 +44,10 @@ class Word(db.Model):
 
 class WordEdit(db.Model):
     """
+    Edit or comment on an existing word.
     """
     word = db.ReferenceProperty(Word, required=True)
-    description = db.TextProperty(required=True, indexed=False)
+    comment = db.TextProperty(required=True, indexed=False)
 
 class Profile(db.Model):
     """
