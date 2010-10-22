@@ -23,6 +23,7 @@ class Word(db.Model):
             English to Bangla.
         bangla: the word in Bangla
         english: the word in English
+        phoneme: pronunciation by phoneme
         pos: parts of speech of the word
         description: Optional description, example of the word
         contributor: user who first entried it first
@@ -42,12 +43,16 @@ class Word(db.Model):
         """ filter by dictionary """
         return cls.all().filter('dictionary =', dict)
 
+NEW, ACCEPTED, REJECTED, CLOSE = 0, 1, 2, 3
+EDIT_STATES = [NEW, ACCEPTED, REJECTED, CLOSE]
+
 class WordEdit(db.Model):
     """
     Edit or comment on an existing word.
     """
     word = db.ReferenceProperty(Word, required=True)
     comment = db.TextProperty(required=True, indexed=False)
+    status = db.IntegerProperty(required=True, default=NEW, choices=EDIT_STATES)
 
 class Profile(db.Model):
     """
