@@ -21,5 +21,5 @@ from models import Word
 class WordForm(djangoforms.ModelForm):
     class Meta:
         model = Word
-        exclude = ['synonyms', 'antonyms', 'contributor']
+        exclude = ['synonyms', 'antonyms', 'contributor', 'status']
 

@@ -21,7 +21,7 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util, template
 from google.appengine.api import users
 
-from models import Word
+from models import Word, WordComment
 from forms import WordForm
 
 TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), 'templates')
@@ -90,9 +90,42 @@ class ListHandler(webapp.RequestHandler):
     """ list words """
     def get(self):
         dictionary = int(self.request.GET.get('dict', 0))
-        words = Word.all_by_dictionary(dictionary).order('bangla')
+        words = Word.all_by_dictionary(dictionary).order('bangla').fetch(100)
         html = render('list.html', {'words': words})
         self.response.out.write(html)
+
+class CommentHandler(webapp.RequestHandler):
+    """ comment list """
+    def get_word(self):
+        word_id = self.request.GET.get('id', None)
+        if not word_id:
+            return None
+
+        return Word.get_by_id(long(word_id))
+
+    def get(self):
+        word = self.get_word()
+        if not word:
+            self.error(404)
+            return
+
+        comments = WordComment.all().filter('word =', word).fetch(20)
+        html = render('comments.html', {'comments': comments, 'word': word})
+        self.response.out.write(html)
+
+    def post(self):
+        word = self.get_word()
+        if not word:
+            self.error(404)
+            return
+
+        comment = self.request.POST.get('comment', None)
+        if comment:
+            WordComment(word=word, comment=comment,
+                        user=users.get_current_user()).put()
+
+        self.redirect('/comments?id=%d' % word.key().id())
+
 
 class AdminHandler(webapp.RequestHandler):
     """ admin page """
@@ -102,6 +135,7 @@ class AdminHandler(webapp.RequestHandler):
 def main():
     routes = [('/', MainHandler),
               ('/list', ListHandler),
+              ('/comments', CommentHandler),
               ('/input', InputHandler),
               ('/admin', AdminHandler),
              ]

@@ -21,6 +21,9 @@ DICTIONARIES = [BENG_ENG, ENG_BENG]
 DICTIONARIES_NAME = [(BENG_ENG, 'Bangla to English'),
                      (ENG_BENG, 'English to Bangla')]
 
+NEW, ACCEPTED, REJECTED, CLOSE = 0, 1, 2, 3
+EDIT_STATES = [NEW, ACCEPTED, REJECTED, CLOSE]
+
 class Word(db.Model):
     """
     The main model to store the word definitions.
@@ -43,15 +46,14 @@ class Word(db.Model):
     description = db.TextProperty(required=False, indexed=False)
     synonyms = db.ListProperty(unicode)
     antonyms = db.ListProperty(unicode)
-    contributor = db.UserProperty(required=False)
+    contributor = db.UserProperty()
+    status = db.IntegerProperty(default=NEW, choices=EDIT_STATES)
+    added_at = db.DateTimeProperty(auto_now_add=True)
 
     @classmethod
     def all_by_dictionary(cls, dict):
         """ filter by dictionary """
         return cls.all().filter('dictionary =', dict)
-
-NEW, ACCEPTED, REJECTED, CLOSE = 0, 1, 2, 3
-EDIT_STATES = [NEW, ACCEPTED, REJECTED, CLOSE]
 
 class WordComment(db.Model):
     """
@@ -59,7 +61,8 @@ class WordComment(db.Model):
     """
     word = db.ReferenceProperty(Word, required=True)
     comment = db.TextProperty(required=True, indexed=False)
-    status = db.IntegerProperty(required=True, default=NEW, choices=EDIT_STATES)
+    user = db.UserProperty(required=True)
+    commented_at = db.DateTimeProperty(auto_now_add=True)
 
 class Profile(db.Model):
     """

@@ -4,8 +4,8 @@
 {% regroup words by bangla as word_list %}
 <dl>
 	{% for word in word_list %}
-	<dl>{{ word.grouper }}</dl>
-	<dt><ul>
+	<dt>{{ word.grouper }}</dt>
+	<dd><ul>
 		{% for item in word.list %}
 		<li>
 		{% ifchanged %}[{{ item.phoneme }}]{% endifchanged %} ({{ item.pos }}) {{ item.english }}
@@ -28,7 +28,7 @@
 			{% endifequal %}
 		</li>
 		{% endfor %}
-	</ul></dt>
+	</ul></dd>
 	{% endfor %}
 </dl>
 {% endblock %}
