@@ -90,7 +90,7 @@ class ListHandler(webapp.RequestHandler):
     """ list words """
     def get(self):
         dictionary = int(self.request.GET.get('dict', 0))
-        words = Word.all_by_dictionary(dictionary).order('bangla').fetch(100)
+        words = Word.all_by_dictionary(dictionary).order('original').fetch(100)
         html = render('list.html', {'words': words})
         self.response.out.write(html)
 
@@ -115,7 +115,7 @@ class CommentHandler(webapp.RequestHandler):
 
     def post(self):
         word = self.get_word()
-        if not word:
+        if not word or not users.get_current_user():
             self.error(404)
             return
 

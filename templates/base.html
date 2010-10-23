@@ -1,13 +1,14 @@
-<!document html>
-<html>
+<!doctype html>
+<html lang="bn">
 	<head>
+		<meta charset="utf-8">
 		<title>Bangla Dictionary | {% block title %}{% endblock %}</title>
 	</head>
 	<body>
 		{% if user %}
-		You're logged in as {{ user.nickname }}. <a href="{{ auth_url }}">Logout</a>.
+		You're logged in as {{ user.nickname }}. <a href="{{ auth_url|escape }}">Logout</a>.
 		{% else %}
-		Login with your <a href="{{ auth_url }}">Google Account</a>.
+		Login with your <a href="{{ auth_url|escape }}">Google Account</a>.
 		{% endif %}
 		<ul>
 			<li><a href="/">Home</a></li>

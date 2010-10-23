@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}List{% endblock %}
 {% block content %}
-{% regroup words by bangla as word_list %}
+{% regroup words by original as word_list %}
 <dl>
 	{% for word in word_list %}
 	<dt>{{ word.grouper }}</dt>
 	<dd><ul>
 		{% for item in word.list %}
 		<li>
-		{% ifchanged %}[{{ item.phoneme }}]{% endifchanged %} ({{ item.pos }}) {{ item.english }}
+		{% ifchanged %}[{{ item.phoneme }}]{% endifchanged %} ({{ item.pos }}) {{ item.translated }}
 		<p>{{ item.description }}</p>
 		<p>
 			<b>Synonyms:</b>

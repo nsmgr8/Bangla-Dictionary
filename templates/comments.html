@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block title %}Comments{% endblock %}
 {% block content %}
-<h1>Discussion on {{ word.bangla }}</h1>
+<h1>Discussion on {{ word.original }}</h1>
 <dl>
-	<dt>{{ word.bangla }}</dt>
+	<dt>{{ word.original }}</dt>
 	<dd>
-		[{{ word.phoneme }}] ({{ word.pos }}) {{ word.english }}
+		[{{ word.phoneme }}] ({{ word.pos }}) {{ word.translated }}
 		<p>{{ word.description }}</p>
 		<p>
 			<b>Synonyms:</b>
@@ -33,10 +33,14 @@
 	</li>
 	{% endfor %}
 </ul>
+{% if user %}
 <form method="POST" action="">
 	<label for="id_comment">Post your comment</label><br />
 	<textarea name="comment" id="id_comment" rows="10" cols="30"></textarea>
 	<br />
 	<input type="submit" name="submit" value="Submit" />
 </form>
+{% else %}
+Please <a href="{{ auth_url|escape }}">login</a> to post your comment.
+{% endif %}
 {% endblock %}

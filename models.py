@@ -29,8 +29,8 @@ class Word(db.Model):
     The main model to store the word definitions.
         dictionary: a string defining the dictionary. i.e., Bangla to English or
             English to Bangla.
-        bangla: the word in Bangla
-        english: the word in English
+        original: the word in Bangla
+        translated: the word in English
         phoneme: pronunciation by phoneme
         pos: parts of speech of the word
         description: Optional description, example of the word
@@ -38,8 +38,8 @@ class Word(db.Model):
     """
     dictionary = db.IntegerProperty(required=True, choices=DICTIONARIES,
                                     default=BENG_ENG)
-    bangla = db.StringProperty(required=True)
-    english = db.StringProperty(required=True)
+    original = db.StringProperty(required=True)
+    translated = db.StringProperty(required=True)
     phoneme = db.StringProperty(required=False, indexed=False)
     pos = db.StringProperty(required=True, indexed=False,
                             verbose_name='Parts of Speech')
