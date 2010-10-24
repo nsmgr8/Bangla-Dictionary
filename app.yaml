@@ -4,13 +4,16 @@ runtime: python
 api_version: 1
 
 handlers:
-- url: /input
+- url: /(input|profile)
   script: main.py
   login: required
 
 - url: /admin
   script: main.py
   login: admin
+
+- url: /static
+  static_dir: static
 
 - url: .*
   script: main.py

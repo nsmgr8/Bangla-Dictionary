@@ -126,6 +126,14 @@ class CommentHandler(webapp.RequestHandler):
 
         self.redirect('/comments?id=%d' % word.key().id())
 
+class ProfileHandler(webapp.RequestHandler):
+    """ profile view """
+    def get(self):
+        pass
+
+    def post(self):
+        pass
+
 
 class AdminHandler(webapp.RequestHandler):
     """ admin page """
@@ -137,6 +145,7 @@ def main():
               ('/list', ListHandler),
               ('/comments', CommentHandler),
               ('/input', InputHandler),
+              ('/profile', ProfileHandler),
               ('/admin', AdminHandler),
              ]
     debug = os.environ.get('SERVER_SOFTWARE', '').startswith('Dev')
