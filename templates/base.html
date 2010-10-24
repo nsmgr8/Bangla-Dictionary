@@ -8,17 +8,17 @@
 		<!--[if lt IE 8]>
       <link href="/stylesheets/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
 		<![endif]-->
+		{% block extra_head %}{% endblock %}
 	</head>
 	<body>
-		{% if user %}
-		You're logged in as {{ user.nickname }}. <a href="{{ auth_url|escape }}">Logout</a>.
+		{% if user.is_authenticated %}
+		You're logged in as {{ user.nickname }}. <a href="{% url google_logout %}">Logout</a>.
 		{% else %}
-		Login with your <a href="{{ auth_url|escape }}">Google Account</a>.
+		Login with your <a href="{% url google_login %}">Google Account</a>.
 		{% endif %}
 		<ul>
 			<li><a href="/">Home</a></li>
-			<li><a href="/list">Words</a></li>
-			<li><a href="/input">Contribute</a></li>
+			<li><a href="{% url dict_list %}">Dictionaries</a></li>
 		</ul>
 		{% block content %}{% endblock %}
 	</body>

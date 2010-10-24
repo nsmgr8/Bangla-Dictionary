@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load comments %}
+{% block title %}Word: {{ word.original }}{% endblock %}
+{% block extra_head %}
+<style>
+	label, #id_name, #id_email, #id_url { display: none; }
+</style>
+{% endblock %}
+{% block content %}
+<h1>Word: {{ word.original }}</h1>
+[{{ item.phoneme }}] ({{ item.pos }}) {{ item.translation }}
+<p>{{ item.description }}</p>
+<p><b>Synonyms:</b> {{ item.synonyms }}</p>
+<p><b>Antonyms:</b> {{ item.antonys }}</p>
+{% ifequal user item.contributor %}
+	<a href="/input?id={{ item.key.id }}">Edit</a>
+{% endifequal %}
+<h2>Comments</h2>
+{% render_comment_list for word %}
+<h2>Post your comment</h2>
+{% if user.is_authenticated %}
+{% render_comment_form for word %}
+{% endif %}
+{% endblock %}

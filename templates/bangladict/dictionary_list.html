@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Dictionaries{% endblock %}
+{% block content %}
+<h1>Dictionaries</h1>
+<ul>
+	{% for dictionary in dictionary_list %}
+	<li><a href="{% url dict_word_list dictionary.abbrev %}">{{ dictionary.name }}</a></li>
+	{% endfor %}
+</ul>
+{% endblock %}

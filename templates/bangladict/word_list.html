@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}List{% endblock %}
+{% block content %}
+<h1>Dictionary: {{ dictionary.name }}</h1>
+{% regroup word_list by original as words %}
+<dl>
+	{% for word in words %}
+	<dt><a href="{% url dict_word_detail dictionary.abbrev,word.grouper %}">{{ word.grouper }}</a></dt>
+	<dd><ul>
+		{% for item in word.list %}
+		<li>
+		{% ifchanged %}[{{ item.phoneme }}]{% endifchanged %} ({{ item.pos }}) {{ item.translation }}
+		<p>{{ item.description }}</p>
+		<p>
+			<b>Synonyms:</b> {{ item.synonyms }}
+			</p>
+			<p>
+			<b>Antonyms:</b> {{ item.antonys }}
+			</p>
+			<a href="{% url dict_word_comments item.pk %}">Comments</a>
+			{% ifequal user item.contributor %}
+			<a href="/input?id={{ item.key.id }}">Edit</a>
+			{% endifequal %}
+		</li>
+		{% endfor %}
+	</ul></dd>
+	{% endfor %}
+</dl>
+{% endblock %}
