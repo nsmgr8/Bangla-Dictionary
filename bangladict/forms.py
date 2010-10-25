@@ -14,12 +14,13 @@
 # limitations under the License.
 #
 
-from google.appengine.ext.db import djangoforms
+from django import forms
 
-from models import Word
+from .models import Word
 
-class WordForm(djangoforms.ModelForm):
+class WordForm(forms.ModelForm):
+
     class Meta:
         model = Word
-        exclude = ['synonyms', 'antonyms', 'contributor', 'status']
+        exclude = ['dictionary', 'status', 'contributor',]
 

@@ -19,7 +19,7 @@
 			</p>
 			<a href="{% url dict_word_comments item.pk %}">Comments</a>
 			{% ifequal user item.contributor %}
-			<a href="/input?id={{ item.key.id }}">Edit</a>
+			<a href="{% url dict_word_edit item.dictionary.abbrev,item.pk %}">Edit</a>
 			{% endifequal %}
 		</li>
 		{% endfor %}

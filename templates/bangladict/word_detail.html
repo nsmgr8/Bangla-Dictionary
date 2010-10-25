@@ -8,12 +8,12 @@
 {% endblock %}
 {% block content %}
 <h1>Word: {{ word.original }}</h1>
-[{{ item.phoneme }}] ({{ item.pos }}) {{ item.translation }}
-<p>{{ item.description }}</p>
-<p><b>Synonyms:</b> {{ item.synonyms }}</p>
-<p><b>Antonyms:</b> {{ item.antonys }}</p>
-{% ifequal user item.contributor %}
-	<a href="/input?id={{ item.key.id }}">Edit</a>
+[{{ word.phoneme }}] ({{ word.pos }}) {{ word.translation }}
+<p>{{ word.description }}</p>
+<p><b>Synonyms:</b> {{ word.synonyms }}</p>
+<p><b>Antonyms:</b> {{ word.antonys }}</p>
+{% ifequal user word.contributor %}
+<a href="{% url dict_word_edit word.dictionary.abbrev,word.pk %}">Edit</a>
 {% endifequal %}
 <h2>Comments</h2>
 {% render_comment_list for word %}

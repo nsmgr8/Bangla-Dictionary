@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}{{ dictionary.abbrev }}{% endblock %}
+{% block content %}
+<h1>{{ dictionary }}: <u>{% if word %}Edit {{ word }}{% else %}Create new{% endif %}</u></h1>
+<form method="post" action="">{% csrf_token %}
+	<table>
+		{% for field in form %}
+		<tr>
+    {% if field.is_hidden %}
+      <td>{{ field }}</td>
+		{% else %}
+		<th>{{ field.label_tag }} <br />
+			{% if field.errors %}{{ field.errors }}{% endif %}
+		</th>
+		{% ifequal field.name "pos" %}
+			<td><select name="pos" id="id_pos">
+				<option value="">Please select one</option>
+				{% for p in pos %}
+				<option value="{{ p }}">{{ p }}</option>
+				{% endfor %}
+			</select></td>
+		{% else %}
+		<td>{{ field }}</td>
+		{% endifequal %}
+    {% endif %}
+	  </tr>
+		{% endfor %}
+	</table>
+	<input type="submit" name="Submit" value="Submit" />
+</form>
+{% endblock %}
