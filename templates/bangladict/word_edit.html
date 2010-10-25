@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load dict_tags %}
 {% block title %}{{ dictionary.abbrev }}{% endblock %}
 {% block content %}
 <h1>{{ dictionary }}: <u>{% if word %}Edit {{ word }}{% else %}Create new{% endif %}</u></h1>
@@ -15,9 +16,7 @@
 		{% ifequal field.name "pos" %}
 			<td><select name="pos" id="id_pos">
 				<option value="">Please select one</option>
-				{% for p in pos %}
-				<option value="{{ p }}">{{ p }}</option>
-				{% endfor %}
+				{{ dictionary.pos|split_as_option:',' }}
 			</select></td>
 		{% else %}
 		<td>{{ field }}</td>

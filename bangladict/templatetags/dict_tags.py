@@ -12,6 +12,7 @@ def split_as_option(value, splitter='|', autoescape=None):
     value = value.split(splitter)
     result = ""
     for v in value:
+        v = v.strip()
         result += '<option value="%s">%s</option>\n' % (v, v)
     return mark_safe(result)
 split_as_option.is_safe = True

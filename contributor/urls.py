@@ -15,15 +15,10 @@
 #
 
 from django.conf.urls.defaults import *
-from django.contrib import admin
-admin.autodiscover()
 
-urlpatterns = patterns('',
-    (r'^$', 'django.views.generic.simple.direct_to_template',
-     {'template': 'index.html'}),
-    (r'^accounts/', include('gaeauth.urls')),
-    (r'^admin/', include(admin.site.urls)),
-    (r'^dictionary/', include('bangladict.urls')),
-    (r'^comments/', include('django.contrib.comments.urls')),
-    (r'^contributor/', include('contributor.urls')),
+urlpatterns = patterns('contributor.views',
+    url('^list/$', 'contributor_list', name='contributor_list'),
+    url('^edit/$', 'contributor_edit', name='contributor_edit'),
+    url('^profile/(?P<username>.+)/$', 'contributor_profile',
+        name='contributor_profile'),
 )

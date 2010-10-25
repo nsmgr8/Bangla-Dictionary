@@ -17,6 +17,7 @@ INSTALLED_APPS = (
     'django.contrib.comments',
     'gaeauth',
     'bangladict',
+    'contributor',
 )
 
 if has_djangoappengine:

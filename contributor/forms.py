@@ -14,16 +14,10 @@
 # limitations under the License.
 #
 
-from django.conf.urls.defaults import *
-from django.contrib import admin
-admin.autodiscover()
+from django import forms
 
-urlpatterns = patterns('',
-    (r'^$', 'django.views.generic.simple.direct_to_template',
-     {'template': 'index.html'}),
-    (r'^accounts/', include('gaeauth.urls')),
-    (r'^admin/', include(admin.site.urls)),
-    (r'^dictionary/', include('bangladict.urls')),
-    (r'^comments/', include('django.contrib.comments.urls')),
-    (r'^contributor/', include('contributor.urls')),
-)
+class ProfileForm(forms.Form):
+    fullname = forms.CharField()
+    website = forms.CharField()
+    ims = forms.CharField(label='Instant messenger IDs')
+

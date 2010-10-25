@@ -16,7 +16,6 @@
 
 from django.http import HttpResponseRedirect, Http404
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from django.views.generic.list_detail import object_list, object_detail
 from django.shortcuts import get_object_or_404, render_to_response
@@ -56,10 +55,12 @@ def word_edit(request, dict_abbrev, wid=None):
     dictionary = get_object_or_404(Dictionary, abbrev=dict_abbrev)
     if wid:
         word = get_object_or_404(Word, pk=wid)
+        if not request.user.is_staff:
+            if request.user != word.contributor:
+                raise Http404('Not the contributor')
     else:
         word = None
 
-    pos = [p.strip() for p in dictionary.pos.split(',')]
     if request.method == 'POST':
         form = WordForm(data=request.POST, instance=word)
         if form.is_valid():
@@ -67,12 +68,16 @@ def word_edit(request, dict_abbrev, wid=None):
             entity.dictionary = dictionary
             entity.contributor = request.user
             entity.save()
+            if not word:
+                contrib = request.user.get_or_create_profile()
+                contrib.number_words += 1
+                contrib.save()
             return HttpResponseRedirect(reverse('dict_word_comments',
                                                 args=[entity.pk]))
     else:
         form = WordForm(instance=word)
 
-    context = {'form': form, 'dictionary': dictionary, 'word': word, 'pos': pos}
+    context = {'form': form, 'dictionary': dictionary, 'word': word}
 
     return render_to_response('bangladict/word_edit.html', context,
                               RequestContext(request))

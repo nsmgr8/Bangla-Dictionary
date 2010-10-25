@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Contributors{% endblock %}
+{% block content %}
+<h1>Contributors</h1>
+<table>
+	<tr>
+		<th>Contributor</th>
+		<th>Accepted words</th>
+		<th>Total words</th>
+	</tr>
+	{% for contrib in contributor_list %}
+	<tr>
+		<td><a href="{% url contributor_profile contrib.user.username %}">
+				{{ contrib.user.display_name }}</a></td>
+		<td>{{ contrib.number_accepted }}</td>
+		<td>{{ contrib.number_words }}</td>
+	</tr>
+	{% endfor %}
+</table>
+{% endblock %}

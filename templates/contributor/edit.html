@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+<h1>Edit your profile</h1>
+<form method="POST" action="">{% csrf_token %}
+	<table>
+		<tr><th>Username</th><td>{{ user.username }}</td></tr>
+		<tr><th>Full name</th><td>{{ form.fullname }}</td></tr>
+		<tr><th>Email</th><td>{{ user.email }}</td></tr>
+		<tr><th>Joined on</th><td>{{ user.date_joined }}</td></tr>
+		<tr><th>Website</th><td>{{ form.website }}</td></tr>
+		<tr><th>Instant messenger IDs</th><td>{{ form.ims }}</td></tr>
+		<tr><th>Accepted words</th><td>{{ profile.number_accepted }}</td></tr>
+		<tr><th>Total contributed words</th><td>{{ profile.number_words }}</td></tr>
+</table>
+<input type="submit" name="submit" value="Submit" />
+</form>
+{% endblock %}

@@ -19,6 +19,10 @@
 		<ul>
 			<li><a href="/">Home</a></li>
 			<li><a href="{% url dict_list %}">Dictionaries</a></li>
+			<li><a href="{% url contributor_list %}">Contributors</a></li>
+			{% if user.is_authenticated %}
+			<li><a href="{% url contributor_edit %}">Profile</a></li>
+			{% endif %}
 		</ul>
 		{% block content %}{% endblock %}
 	</body>
