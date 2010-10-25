@@ -32,6 +32,11 @@ class Dictionary(models.Model):
     def __unicode__(self):
         return '%s (%s)' % (self.name, self.abbrev)
 
+    @property
+    def reverse_dict(self):
+        d = self.abbrev.split('2')
+        return "%s2%s" % (d[-1], d[0])
+
 NEW, ACCEPTED, REJECTED, CLOSED = 0, 1, 2, 3
 EDIT_STATES = [(NEW, 'New'), (ACCEPTED, 'Accepted'), (REJECTED, 'Rejected'),
                (CLOSED, 'Closed')]

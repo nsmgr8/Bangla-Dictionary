@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
+{% load dict_tags %}
 {% block title %}List{% endblock %}
 {% block content %}
 <h1>Dictionary: {{ dictionary.name }}</h1>
+<a href="{% url dict_word_create dictionary.abbrev %}">Add a new word</a>
 {% regroup word_list by original as words %}
 <dl>
 	{% for word in words %}
@@ -9,21 +11,34 @@
 	<dd><ul>
 		{% for item in word.list %}
 		<li>
-		{% ifchanged %}[{{ item.phoneme }}]{% endifchanged %} ({{ item.pos }}) {{ item.translation }}
-		<p>{{ item.description }}</p>
-		<p>
-			<b>Synonyms:</b> {{ item.synonyms }}
-			</p>
-			<p>
-			<b>Antonyms:</b> {{ item.antonys }}
-			</p>
-			<a href="{% url dict_word_comments item.pk %}">Comments</a>
-			{% ifequal user item.contributor %}
-			<a href="{% url dict_word_edit item.dictionary.abbrev,item.pk %}">Edit</a>
-			{% endifequal %}
+		{% ifchanged %}[{{ item.phoneme }}]{% endifchanged %} ({{ item.pos }})
+		{% for translation in item.translation|split:',' %}
+		<a href="{% url dict_word_detail dictionary.reverse_dict,translation %}">
+			{{ translation }}{% if not forloop.last %},{% endif %}
+		</a>
+		{% endfor %}
+			<p>{{ item.description }}</p>
+			{% if item.synonyms %}
+			<p><b>Synonyms:</b> {% for synonym in item.synonyms|split:',' %}
+			<a href="{% url dict_word_detail dictionary.abbrev,synonym %}">
+				{{ synonym }}</a>{% if not forloop.last %},{% endif %}
+				{% endfor %}</p>
+			{% endif %}
+			{% if item.antonyms %}
+			<p><b>Antonyms:</b> {% for antonym in item.antonyms|split:',' %}
+			<a href="{% url dict_word_detail dictionary.abbrev,antonym %}">
+				{{ antonym }}</a>{% if not forloop.last %},{% endif %}
+				{% endfor %}</p>
+			{% endif %}
+		<a href="{% url dict_word_comments item.pk %}">Comments</a>
+		{% ifequal user item.contributor %}
+		<a href="{% url dict_word_edit item.dictionary.abbrev,item.pk %}">Edit</a>
+		{% endifequal %}
 		</li>
 		{% endfor %}
 	</ul></dd>
+	{% empty %}
+	No word found!
 	{% endfor %}
 </dl>
 {% endblock %}
