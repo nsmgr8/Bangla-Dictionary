@@ -17,7 +17,7 @@
 from django import forms
 
 class ProfileForm(forms.Form):
-    fullname = forms.CharField()
-    website = forms.CharField()
-    ims = forms.CharField(label='Instant messenger IDs')
+    fullname = forms.CharField(required=False)
+    website = forms.CharField(required=False)
+    ims = forms.CharField(label='Instant messenger IDs', required=False)
 

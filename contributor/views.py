@@ -14,6 +14,8 @@
 # limitations under the License.
 #
 
+import logging
+
 from django.http import HttpResponseRedirect, Http404
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext as _
@@ -42,6 +44,9 @@ def contributor_edit(request):
             profile.website = form.cleaned_data['website']
             profile.ims = form.cleaned_data['ims']
             profile.save()
+        else:
+            logging.warning(form.errors)
+            logging.warning(request.POST)
     else:
         form = ProfileForm(initial={'fullname': request.user.first_name,
                                     'website': profile.website, 'ims':
