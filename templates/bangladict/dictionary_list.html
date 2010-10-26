@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load pagination_tags %}
 {% block title %}Dictionaries{% endblock %}
 {% block content %}
 <h1>Dictionaries</h1>
@@ -7,4 +8,5 @@
 	<li><a href="{% url dict_word_list dictionary.abbrev %}">{{ dictionary.name }}</a></li>
 	{% endfor %}
 </ul>
+{% paginate %}
 {% endblock %}

@@ -18,6 +18,8 @@ INSTALLED_APPS = (
     'gaeauth',
     'bangladict',
     'contributor',
+
+    'pagination',
 )
 
 if has_djangoappengine:
@@ -34,6 +36,16 @@ ROOT_URLCONF = 'urls'
 AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',
                            'gaeauth.backends.GoogleAccountBackend',)
 
+MIDDLEWARE_CLASSES = (
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+
+    'pagination.middleware.PaginationMiddleware',
+)
+
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
@@ -41,6 +53,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.staticfiles.context_processors.staticfiles',
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.request',
+    'django.core.context_processors.media',
 )
 
 # Activate django-dbindexer if available

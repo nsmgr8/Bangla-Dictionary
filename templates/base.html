@@ -3,28 +3,41 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Bangla Dictionary | {% block title %}{% endblock %}</title>
-		<link href="/static/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
-		<link href="/static/stylesheets/print.css" media="print" rel="stylesheet" type="text/css" />
-		<!--[if lt IE 8]>
-      <link href="/stylesheets/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
-		<![endif]-->
+    <link rel="stylesheet"
+		href="http://yui.yahooapis.com/3.2.0/build/cssreset/reset-min.css" type="text/css">
+    <link rel="stylesheet"
+		href="http://yui.yahooapis.com/3.2.0/build/cssbase/base-min.css" type="text/css">
+
+		<link href="/static/stylesheets/screen.css" media="screen" rel="stylesheet"
+		type="text/css" />
 		{% block extra_head %}{% endblock %}
 	</head>
 	<body>
-		{% if user.is_authenticated %}
-		You're logged in as {{ user.nickname }}. <a href="{% url google_logout %}">Logout</a>.
+		<div id="site-title">Bangla Dictionary</div>
+		<div id="auth">{% if user.is_authenticated %}
+		You're logged in as {{ user.username }}. <a href="{% url google_logout %}">Logout</a>.
 		{% else %}
 		Login with your <a href="{% url google_login %}">Google Account</a>.
-		{% endif %}
-		<ul>
-			<li><a href="/">Home</a></li>
-			<li><a href="{% url dict_list %}">Dictionaries</a></li>
-			<li><a href="{% url contributor_list %}">Contributors</a></li>
+		{% endif %}</div>
+		<ul id="tabnav">
+			<li><a href="/" title="Home">Home</a></li>
+			<li><a href="{% url dict_list %}" title="Dictionaries">Dictionaries</a></li>
+			<li><a href="{% url contributor_list %}" title="Contributors">Contributors</a></li>
 			{% if user.is_authenticated %}
-			<li><a href="{% url contributor_edit %}">Profile</a></li>
+			<li><a href="{% url contributor_edit %}" title="Your profile">Profile</a></li>
 			{% endif %}
+			<li><a href="http://github.com/nsmgr8/Bangla-Dictionary/issues"
+				title="Bug report / Feature request">Bug/Feature</a></li>
 		</ul>
-		{% block content %}{% endblock %}
+		<div id="container">
+			{% block content %}{% endblock %}
+		</div>
+		<div id="footer">This is an open-source project. The resultant database will
+			be open and free to everyone for use. <br />
+			This site is also an open source codebase hosted at
+		 	<a href="http://github.com/nsmgr8/Bangla-Dictionary">GitHub</a>. <br />
+			Copyright &copy; BengDict Project 2010.
+		</div>
 	</body>
 </html>
 

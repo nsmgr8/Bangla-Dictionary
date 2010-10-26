@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
-{% load dict_tags %}
+{% load dict_tags pagination_tags %}
 {% block title %}List{% endblock %}
 {% block content %}
 <h1>Dictionary: {{ dictionary.name }}</h1>
 <a href="{% url dict_word_create dictionary.abbrev %}">Add a new word</a>
 {% regroup word_list by original as words %}
-<dl>
+<dl class="word-list">
 	{% for word in words %}
 	<dt><a href="{% url dict_word_detail dictionary.abbrev,word.grouper %}">{{ word.grouper }}</a></dt>
 	<dd><ul>
@@ -17,23 +17,23 @@
 			{{ translation }}{% if not forloop.last %},{% endif %}
 		</a>
 		{% endfor %}
-			<p>{{ item.description }}</p>
-			{% if item.synonyms %}
-			<p><b>Synonyms:</b> {% for synonym in item.synonyms|split:',' %}
-			<a href="{% url dict_word_detail dictionary.abbrev,synonym %}">
-				{{ synonym }}</a>{% if not forloop.last %},{% endif %}
-				{% endfor %}</p>
-			{% endif %}
-			{% if item.antonyms %}
-			<p><b>Antonyms:</b> {% for antonym in item.antonyms|split:',' %}
-			<a href="{% url dict_word_detail dictionary.abbrev,antonym %}">
-				{{ antonym }}</a>{% if not forloop.last %},{% endif %}
-				{% endfor %}</p>
-			{% endif %}
-		<a href="{% url dict_word_comments item.pk %}">Comments</a>
+		<p>{{ item.description }}</p>
+		{% if item.synonyms %}
+		<p><b>Synonyms:</b> {% for synonym in item.synonyms|split:',' %}
+		<a href="{% url dict_word_detail dictionary.abbrev,synonym %}">
+			{{ synonym }}</a>{% if not forloop.last %},{% endif %}
+			{% endfor %}</p>
+		{% endif %}
+		{% if item.antonyms %}
+		<p><b>Antonyms:</b> {% for antonym in item.antonyms|split:',' %}
+		<a href="{% url dict_word_detail dictionary.abbrev,antonym %}">
+			{{ antonym }}</a>{% if not forloop.last %},{% endif %}
+			{% endfor %}</p>
+		{% endif %}
+		<p><a href="{% url dict_word_comments item.pk %}">Comments</a>
 		{% ifequal user item.contributor %}
 		<a href="{% url dict_word_edit item.dictionary.abbrev,item.pk %}">Edit</a>
-		{% endifequal %}
+		{% endifequal %}</p>
 		</li>
 		{% endfor %}
 	</ul></dd>
@@ -41,4 +41,5 @@
 	No word found!
 	{% endfor %}
 </dl>
+{% paginate %}
 {% endblock %}
