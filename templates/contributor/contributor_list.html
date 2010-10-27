@@ -18,5 +18,7 @@
 	</tr>
 	{% endfor %}
 </table>
+{% if is_paginated %}
 {% paginate %}
+{% endif %}
 {% endblock %}

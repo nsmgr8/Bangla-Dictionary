@@ -30,7 +30,7 @@ from .models import Contributor
 from .forms import ProfileForm
 
 def contributor_list(request):
-    return object_list(request, Contributor.objects.order_by('number_words'),
+    return object_list(request, Contributor.objects.order_by('-number_words'),
                        template_object_name='contributor', paginate_by=50)
 
 @login_required

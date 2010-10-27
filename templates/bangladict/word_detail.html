@@ -12,7 +12,7 @@
 <p>{{ word.description }}</p>
 <p><b>Synonyms:</b> {{ word.synonyms }}</p>
 <p><b>Antonyms:</b> {{ word.antonys }}</p>
-<p>Added by {{ user.display_name }}</p>
+<p>Added by {{ word.contributor.display_name }}</p>
 {% ifequal user word.contributor %}
 <a href="{% url dict_word_edit word.dictionary.abbrev,word.pk %}">Edit</a>
 {% endifequal %}

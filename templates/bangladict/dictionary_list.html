@@ -8,5 +8,7 @@
 	<li><a href="{% url dict_word_list dictionary.abbrev %}">{{ dictionary.name }}</a></li>
 	{% endfor %}
 </ul>
+{% if is_paginated %}
 {% paginate %}
+{% endif %}
 {% endblock %}

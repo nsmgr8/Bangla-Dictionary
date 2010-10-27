@@ -41,5 +41,7 @@
 	No word found!
 	{% endfor %}
 </dl>
+{% if is_paginated %}
 {% paginate %}
+{% endif %}
 {% endblock %}
