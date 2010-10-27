@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Load{% endblock %}
+{% block content %}
+<h1>Load words</h1>
+<p>Here you can load a file with word definitions. Currently json formatted
+files are supported.</p>
+<form method="post" action="" enctype="multipart/form-data">{% csrf_token %}
+	<p>
+		<label for="file">File:</label>
+		<input type="file" name="file" value="" />
+	</p>
+	<input type="submit" name="submit" value="Submit" />
+</form>
+{% endblock %}
