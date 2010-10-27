@@ -23,5 +23,6 @@ urlpatterns = patterns('bangladict.views',
     url(r'^(?P<dict_abbrev>\w+)/edit/create/$', 'word_edit', name='dict_word_create'),
     url(r'^(?P<dict_abbrev>\w+)/edit/(?P<wid>\d+)/$', 'word_edit', name='dict_word_edit'),
     url(r'^word/(?P<dict_abbrev>\w+)/(?P<word>.+)/$', 'word_detail', name='dict_word_detail'),
+    url(r'^bulk/load/$', 'bulk_load', name='dict_bulk_load'),
 )
 

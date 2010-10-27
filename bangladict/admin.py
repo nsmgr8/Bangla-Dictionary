@@ -16,8 +16,10 @@
 
 from django.contrib import admin
 
-from .models import Dictionary, Word
+from .models import Dictionary, Word, WordLoad
 
 admin.site.register(Dictionary)
 admin.site.register(Word)
+admin.site.register(WordLoad)
+
 

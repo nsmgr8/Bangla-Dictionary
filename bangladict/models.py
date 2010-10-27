@@ -57,3 +57,11 @@ class Word(models.Model):
     def __unicode__(self):
         return '%s -> %s' % (self.original, self.translation)
 
+class WordLoad(models.Model):
+    contributor = models.ForeignKey(User)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    file = models.TextField()
+
+    def __unicode__(self):
+        return self.file[:20]
+

@@ -14,6 +14,8 @@
 # limitations under the License.
 #
 
+import logging
+
 from django.http import HttpResponseRedirect, Http404
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext as _
@@ -22,8 +24,9 @@ from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
 from django.core.urlresolvers import reverse
+from django.utils import simplejson as json
 
-from .models import Word, Dictionary
+from .models import Word, Dictionary, WordLoad
 from .forms import WordForm
 
 def dictionary_list(request):
@@ -81,3 +84,25 @@ def word_edit(request, dict_abbrev, wid=None):
 
     return render_to_response('bangladict/word_edit.html', context,
                               RequestContext(request))
+
+@csrf_protect
+@login_required
+def bulk_load(request):
+    if request.method == 'POST':
+        f = request.FILES.get('file', None)
+        if f:
+            loads = WordLoad.objects.filter(contributor=request.user)
+            current = f.read()
+            loaded = False
+            for f in loads:
+                if f.file == current:
+                    loaded = True
+                    break
+            if not loaded:
+                WordLoad(file=current, contributor=request.user).save()
+
+    context = {}
+
+    return render_to_response('bangladict/bulk_load.html', context,
+                              RequestContext(request))
+
