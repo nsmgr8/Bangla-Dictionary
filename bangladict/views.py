@@ -14,6 +14,7 @@
 # limitations under the License.
 #
 
+import hashlib
 import logging
 
 from django.http import HttpResponseRedirect, Http404
@@ -25,6 +26,10 @@ from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
 from django.core.urlresolvers import reverse
 from django.utils import simplejson as json
+from django.db.utils import DatabaseError
+
+from google.appengine.ext import deferred
+from google.appengine.runtime import DeadlineExceededError
 
 from .models import Word, Dictionary, WordLoad
 from .forms import WordForm
@@ -92,19 +97,71 @@ def bulk_load(request):
         f = request.FILES.get('file', None)
         if f:
             current = f.read()
-            json.loads(current)
+            try:
+                j = json.loads(current)
+                hash = hashlib.sha1(current).hexdigest()
 
-            loads = WordLoad.objects.filter(contributor=request.user)
-            loaded = False
-            for f in loads:
-                if f.file == current:
-                    loaded = True
-                    break
-            if not loaded:
-                WordLoad(file=current, contributor=request.user).save()
+                if WordLoad.objects.filter(hash=hash).count() > 0:
+                    msg = 'Already uploaded this file'
+                else:
+                    wfile = WordLoad(file=current, contributor=request.user,
+                                     hash=hash)
+                    wfile.save()
+                    deferred.defer(add_words_from_file, wfile.pk)
+                    msg = 'Thanks for the input. It will be added to the database soon'
+            except Exception, e:
+                logging.info(e)
+                msg = 'Could not save this file.'
+        else:
+            msg = 'No file uploaded. Please select a file to upload'
+
+        logging.info(msg)
 
     context = {}
 
     return render_to_response('bangladict/bulk_load.html', context,
                               RequestContext(request))
+
+def add_words_from_file(fid, index=0):
+    logging.info("updating: %d %d" % (fid, index))
+    wfile = WordLoad.objects.get(pk=fid)
+    logging.info(wfile.hash)
+    dicts = Dictionary.objects.all()
+    dictionaries = {}
+    for d in dicts:
+        dictionaries[d.abbrev] = d
+
+    try:
+        word_file = json.loads(wfile.file)
+        if index >= len(word_file):
+            return
+
+        counter = index
+        for words in word_file[index:]:
+            model = words.get('model', None)
+            if not model or model != 'bangladict.word':
+                continue
+            fields = words.get('fields', None)
+            if not fields:
+                continue
+            dictionary = dictionaries[fields['dictionary']]
+            word = Word(dictionary=dictionary, contributor=wfile.contributor,
+                        original=fields['original'],
+                        translation=fields['translation'],
+                        phoneme=fields['phoneme'], pos=fields['pos'],
+                        synonyms=fields['synonyms'],
+                        antonyms=fields['antonyms'],
+                        description=fields['description'])
+            word.save()
+            counter += 1
+    except DeadlineExceededError:
+        logging.info('DeadlineExceededError')
+        deferred.defer(add_words_from_file, fid, counter)
+    except DatabaseError:
+        logging.info('DatabaseError')
+        deferred.defer(add_words_from_file, fid, counter+1)
+    except:
+        pass
+
+    logging.info(counter)
 

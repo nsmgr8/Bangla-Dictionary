@@ -60,6 +60,7 @@ class Word(models.Model):
 class WordLoad(models.Model):
     contributor = models.ForeignKey(User)
     uploaded_at = models.DateTimeField(auto_now_add=True)
+    hash = models.CharField(max_length=256)
     file = models.TextField()
 
     def __unicode__(self):
