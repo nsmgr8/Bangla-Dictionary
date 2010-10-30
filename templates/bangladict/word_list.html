@@ -3,7 +3,12 @@
 {% block title %}List{% endblock %}
 {% block content %}
 <h1>Dictionary: {{ dictionary.name }}</h1>
-<a href="{% url dict_word_create dictionary.abbrev %}">Add a new word</a>
+<ul class="alpha-list">
+	{% for alpha in alphabets %}
+	<li><a href="">{{ alpha }}</a></li>
+	{% endfor %}
+</ul>
+<p><a href="{% url dict_word_create dictionary.abbrev %}">Add a new word</a></p>
 {% regroup word_list by original as words %}
 <dl class="word-list">
 	{% for word in words %}

@@ -1,4 +1,4 @@
-ul#tabnav { /* general settings */
+ul#tabnav, ul.alpha-list { /* general settings */
 text-align: left; /* set to left, right or center */
 margin: 1em 0 1em 0; /* set margins as desired */
 font: bold 11px verdana, arial, sans-serif; /* set font as desired */
@@ -7,11 +7,11 @@ list-style-type: none;
 padding: 3px 10px 3px 10px; /* THIRD number must change with respect to padding-top (X) below */
 }
 
-ul#tabnav li { /* do not change */
+ul#tabnav li, ul.alpha-list li { /* do not change */
 display: inline;
 }
 
-ul#tabnav li a { /* settings for all tab links */
+ul#tabnav li a, ul.alpha-list li a { /* settings for all tab links */
 padding: 3px 4px; /* set padding (tab size) as desired; FIRST number must change with respect to padding-top (X) above */
 border: 1px solid #6c6; /* set border COLOR as desired; usually matches border color specified in #tabnav */
 background-color: #cfc; /* set unselected tab background color as desired */
@@ -21,7 +21,7 @@ text-decoration: none;
 border-bottom: none;
 }
 
-ul#tabnav a:hover { /* settings for hover effect */
+ul#tabnav a:hover, ul.alpha-list a:hover { /* settings for hover effect */
 background: #fff; /* set desired hover color */
 }
 
@@ -58,6 +58,7 @@ th, td {
 	padding: 3px 50px;
 	color: #999;
 	text-align: center;
+	font-size: 80%;
 }
 
 #footer a {

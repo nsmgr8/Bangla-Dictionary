@@ -8,6 +8,7 @@
 		<th>Contributor</th>
 		<th>Accepted words</th>
 		<th>Total words</th>
+		<th>Currently working</th>
 	</tr>
 	{% for contrib in contributor_list %}
 	<tr>
@@ -15,6 +16,7 @@
 				{{ contrib.user.display_name }}</a></td>
 		<td>{{ contrib.number_accepted }}</td>
 		<td>{{ contrib.number_words }}</td>
+		<td>{{ contrib.current_work }}</td>
 	</tr>
 	{% endfor %}
 </table>

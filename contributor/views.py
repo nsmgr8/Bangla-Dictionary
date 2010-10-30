@@ -26,8 +26,9 @@ from django.views.decorators.csrf import csrf_protect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 
-from .models import Contributor
-from .forms import ProfileForm
+from models import Contributor
+from forms import ProfileForm
+from bangladict.models import Dictionary
 
 def contributor_list(request):
     return object_list(request, Contributor.objects.order_by('-number_words'),
@@ -36,6 +37,8 @@ def contributor_list(request):
 @login_required
 def contributor_edit(request):
     profile = request.user.get_or_create_profile()
+    working = profile.working_on.split('::')
+    abbrev, frm, to = working if len(working) == 3 else [None] * 3
     if request.method == 'POST':
         form = ProfileForm(data=request.POST)
         if form.is_valid():
@@ -43,6 +46,13 @@ def contributor_edit(request):
             profile.user.save()
             profile.website = form.cleaned_data['website']
             profile.ims = form.cleaned_data['ims']
+            abbrev = request.POST.get('dictionary', None)
+            if abbrev:
+                frm = request.POST.get('from', '')
+                to = request.POST.get('to', '')
+                profile.working_on = '::'.join([abbrev, frm.strip(), to.strip()])
+            else:
+                profile.working_on = ''
             profile.save()
         else:
             logging.warning(form.errors)
@@ -52,7 +62,10 @@ def contributor_edit(request):
                                     'website': profile.website, 'ims':
                                     profile.ims})
 
-    context = {'form': form, 'profile': profile}
+    context = {'form': form, 'profile': profile, 'dictionaries':
+               Dictionary.objects.all()}
+    if abbrev and frm and to:
+        context.update({'abbrev': abbrev, 'from': frm, 'to': to})
     return render_to_response('contributor/edit.html', context,
                               RequestContext(request))
 

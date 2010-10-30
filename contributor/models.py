@@ -17,12 +17,26 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from bangladict.models import Dictionary
+
 class Contributor(models.Model):
     website = models.CharField(max_length=200, blank=True)
     ims = models.CharField(max_length=200, blank=True)
+    working_on = models.CharField(max_length=100, blank=True)
     number_words = models.IntegerField(default=0)
     number_accepted = models.IntegerField(default=0)
     user = models.ForeignKey(User)
+
+    def current_work(self):
+        w = self.working_on.split('::')
+        if len(w) != 3:
+            return ''
+
+        dictionary = Dictionary.objects.filter(abbrev=w[0])
+        if len(dictionary) == 0:
+            return ''
+
+        return '%s: %s - %s' % (dictionary[0].name, w[1], w[2])
 
     def __unicode__(self):
         return self.user.username
