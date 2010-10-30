@@ -24,6 +24,7 @@ class Dictionary(models.Model):
     target_language = models.CharField(max_length=200)
     abbrev = models.CharField(max_length=10)
     pos = models.TextField(verbose_name='Parts of Speech')
+    alphabets = models.TextField()
 
     class Meta:
         verbose_name = 'Dictionary'
