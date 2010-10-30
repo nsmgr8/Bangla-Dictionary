@@ -20,6 +20,7 @@ from django.contrib.auth.models import User
 class Contributor(models.Model):
     website = models.CharField(max_length=200, blank=True)
     ims = models.CharField(max_length=200, blank=True)
+    working_on = models.CharField(max_length=100, blank=True)
     number_words = models.IntegerField(default=0)
     number_accepted = models.IntegerField(default=0)
     user = models.ForeignKey(User)

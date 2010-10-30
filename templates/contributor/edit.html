@@ -12,6 +12,19 @@
 		<tr><th>Instant messenger IDs</th><td>{{ form.ims }}</td></tr>
 		<tr><th>Accepted words</th><td>{{ profile.number_accepted }}</td></tr>
 		<tr><th>Total contributed words</th><td>{{ profile.number_words }}</td></tr>
+		<tr><th>Currently working on</th><td>
+				<select name="dictionary">
+					<option value="">Please select one</option>
+					<option value="">=================</option>
+					{% for d in dictionaries %}
+					<option value="{{ d.abbrev }}">{{ d.name }}</option>
+					{% endfor %}
+				</select>
+				<label for="id_from">from</label>
+				<input type="text" name="from" id="id_from" value="{{ from }}"/>
+				<label for="id_to">to</label>
+				<input type="text" name="to" id="id_to" value="{{ to }}"/>
+		</td></tr>
 </table>
 <input type="submit" name="submit" value="Submit" />
 </form>

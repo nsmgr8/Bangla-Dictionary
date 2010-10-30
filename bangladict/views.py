@@ -41,7 +41,11 @@ def dictionary_list(request):
 def word_list(request, dict_abbrev):
     dictionary = get_object_or_404(Dictionary, abbrev=dict_abbrev)
     words = Word.objects.filter(dictionary=dictionary)
-    context = {'dictionary': dictionary}
+    context = {
+        'dictionary': dictionary,
+        'alphabets': [a.strip() for a in dictionary.alphabets.split() if
+                      a.strip()]
+    }
     return object_list(request, words, template_object_name='word',
                        paginate_by=50, extra_context=context)
 
@@ -75,6 +79,7 @@ def word_edit(request, dict_abbrev, wid=None):
             entity = form.save(commit=False)
             entity.dictionary = dictionary
             entity.contributor = request.user
+            entity.alpha = entity.original[0]
             entity.save()
             if not word:
                 contrib = request.user.get_or_create_profile()
@@ -146,6 +151,7 @@ def add_words_from_file(fid, index=0):
                 continue
             dictionary = dictionaries[fields['dictionary']]
             word = Word(dictionary=dictionary, contributor=wfile.contributor,
+                        alpha=fields['original'][0],
                         original=fields['original'],
                         translation=fields['translation'],
                         phoneme=fields['phoneme'], pos=fields['pos'],
@@ -160,8 +166,9 @@ def add_words_from_file(fid, index=0):
     except DatabaseError:
         logging.info('DatabaseError')
         deferred.defer(add_words_from_file, fid, counter+1)
-    except:
-        pass
+    except Exception, e:
+        logging.warning(e)
+        logging.info('%s %d' % wfile.contributor.username, wfile.pk)
 
     logging.info(counter)
 

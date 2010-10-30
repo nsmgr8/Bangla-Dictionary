@@ -44,6 +44,7 @@ EDIT_STATES = [(NEW, 'New'), (ACCEPTED, 'Accepted'), (REJECTED, 'Rejected'),
 
 class Word(models.Model):
     dictionary = models.ForeignKey(Dictionary)
+    alpha = models.CharField(max_length=5)
     original = models.CharField(max_length=50)
     translation = models.CharField(max_length=50)
     phoneme = models.CharField(max_length=70, blank=True)

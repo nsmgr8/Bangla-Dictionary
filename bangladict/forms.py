@@ -22,7 +22,7 @@ class WordForm(forms.ModelForm):
 
     class Meta:
         model = Word
-        exclude = ['dictionary', 'status', 'contributor',]
+        exclude = ['dictionary', 'alpha', 'status', 'contributor',]
 
     def clean(self):
         for field in self.cleaned_data:
