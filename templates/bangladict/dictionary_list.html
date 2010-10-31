@@ -5,7 +5,15 @@
 <h1>Dictionaries</h1>
 <ul>
 	{% for dictionary in dictionary_list %}
-	<li><a href="{% url dict_word_list dictionary.abbrev %}">{{ dictionary.name }}</a></li>
+	<li>
+	<a href="{% url dict_word_list dictionary.abbrev %}">{{ dictionary.name }}</a>
+	{% if user.is_authenticated %}
+	<a href="{% url dict_word_list_status dictionary.abbrev,'new' %}">New words</a>
+	{% endif %}
+	{% if user.is_staff %}
+	<a href="{% url dict_word_list_status dictionary.abbrev,'rejected' %}">Rejected</a>
+	{% endif %}
+	</li>
 	{% endfor %}
 </ul>
 {% if is_paginated %}

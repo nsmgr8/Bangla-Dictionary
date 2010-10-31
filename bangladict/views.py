@@ -31,16 +31,27 @@ from django.db.utils import DatabaseError
 from google.appengine.ext import deferred
 from google.appengine.runtime import DeadlineExceededError
 
-from .models import Word, Dictionary, WordLoad
+from .models import Word, Dictionary, WordLoad, NEW, ACCEPTED, REJECTED
 from .forms import WordForm
 
 def dictionary_list(request):
     return object_list(request, Dictionary.objects.all(),
                        template_object_name='dictionary', paginate_by=10)
 
-def word_list(request, dict_abbrev):
+def word_list(request, dict_abbrev, alpha=None, status='accepted'):
+    status = {'new': NEW, 'accepted': ACCEPTED, 'rejected': REJECTED}[status]
+    if status == NEW and not request.user.is_authenticated():
+        raise Http404
+    if status == REJECTED and not request.user.is_staff:
+        raise Http404
+
     dictionary = get_object_or_404(Dictionary, abbrev=dict_abbrev)
-    words = Word.objects.filter(dictionary=dictionary)
+    words = Word.objects.filter(dictionary=dictionary,
+                                status=status).order_by('original')
+
+    if alpha:
+        words = words.filter(alpha=alpha)
+
     context = {
         'dictionary': dictionary,
         'alphabets': [a.strip() for a in dictionary.alphabets.split() if
@@ -51,8 +62,8 @@ def word_list(request, dict_abbrev):
 
 def word_comments(request, wid):
     word = get_object_or_404(Word, pk=wid)
-    return object_detail(request, Word.objects.all(), wid,
-                         template_object_name='word')
+    return render_to_response('bangladict/word_detail.html', {'word': word},
+                              RequestContext(request))
 
 def word_detail(request, dict_abbrev, word):
     dictionary = get_object_or_404(Dictionary, abbrev=dict_abbrev)

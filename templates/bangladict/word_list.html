@@ -2,10 +2,12 @@
 {% load dict_tags pagination_tags %}
 {% block title %}List{% endblock %}
 {% block content %}
-<h1>Dictionary: {{ dictionary.name }}</h1>
+<h1>
+	<a href="{% url dict_word_list dictionary.abbrev %}">{{ dictionary.name }}</a>
+</h1>
 <ul class="alpha-list">
 	{% for alpha in alphabets %}
-	<li><a href="">{{ alpha }}</a></li>
+	<li><a href="{% url dict_word_list_alpha dictionary.abbrev,alpha %}">{{ alpha }}</a></li>
 	{% endfor %}
 </ul>
 <p><a href="{% url dict_word_create dictionary.abbrev %}">Add a new word</a></p>
@@ -35,10 +37,12 @@
 			{{ antonym }}</a>{% if not forloop.last %},{% endif %}
 			{% endfor %}</p>
 		{% endif %}
+		{% ifnotequal item.status 1 %}
 		<p><a href="{% url dict_word_comments item.pk %}">Comments</a>
 		{% ifequal user item.contributor %}
 		<a href="{% url dict_word_edit item.dictionary.abbrev,item.pk %}">Edit</a>
 		{% endifequal %}</p>
+		{% endifnotequal %}
 		</li>
 		{% endfor %}
 	</ul></dd>
