@@ -106,6 +106,17 @@ def word_edit(request, dict_abbrev, wid=None):
     return render_to_response('bangladict/word_edit.html', context,
                               RequestContext(request))
 
+@login_required
+def word_accept(request, wid, status):
+    if not request.user.is_staff:
+        raise Http404
+
+    word = get_object_or_404(Word, pk=wid)
+    word.status = {'accept': ACCEPTED, 'reject': REJECTED}[status]
+    word.save()
+
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
 @csrf_protect
 @login_required
 def bulk_load(request):

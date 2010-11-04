@@ -42,6 +42,10 @@
 		{% ifequal user item.contributor %}
 		<a href="{% url dict_word_edit item.dictionary.abbrev,item.pk %}">Edit</a>
 		{% endifequal %}</p>
+		{% if user.is_staff %}
+		<a href="{% url dict_word_accept item.pk,'accept' %}">Accept</a>
+		<a href="{% url dict_word_accept item.pk,'reject' %}">Reject</a>
+		{% endif %}
 		{% endifnotequal %}
 		</li>
 		{% endfor %}
