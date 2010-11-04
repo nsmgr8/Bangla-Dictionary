@@ -112,8 +112,18 @@ def word_accept(request, wid, status):
         raise Http404
 
     word = get_object_or_404(Word, pk=wid)
-    word.status = {'accept': ACCEPTED, 'reject': REJECTED}[status]
+    current_status = {'accept': ACCEPTED, 'reject': REJECTED}[status]
+    previous_status = word.status
+    word.status = current_status
     word.save()
+
+    profile = word.contributor.get_or_create_profile()
+    if current_status == ACCEPTED:
+        profile.number_accepted += 1
+        profile.save()
+    elif current_status == REJECTED and previous_status == ACCEPTED:
+        profile.number_accepted -= 1
+        profile.save()
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
