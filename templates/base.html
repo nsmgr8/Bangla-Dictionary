@@ -26,6 +26,7 @@
 			{% if user.is_authenticated %}
 			<li><a href="{% url contributor_edit %}" title="Your profile">Profile</a></li>
 			{% endif %}
+			<li><a href="{% url dict_bulk_load %}">Upload</a></li>
 			<li><a href="http://github.com/nsmgr8/Bangla-Dictionary/issues"
 				title="Bug report / Feature request">Bug/Feature</a></li>
 		</ul>

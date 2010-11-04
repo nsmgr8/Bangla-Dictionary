@@ -109,6 +109,7 @@ def word_edit(request, dict_abbrev, wid=None):
 @csrf_protect
 @login_required
 def bulk_load(request):
+    context = None
     if request.method == 'POST':
         f = request.FILES.get('file', None)
         if f:
@@ -131,9 +132,7 @@ def bulk_load(request):
         else:
             msg = 'No file uploaded. Please select a file to upload'
 
-        logging.info(msg)
-
-    context = {}
+        context = {'load_message': msg}
 
     return render_to_response('bangladict/bulk_load.html', context,
                               RequestContext(request))
@@ -141,11 +140,12 @@ def bulk_load(request):
 def add_words_from_file(fid, index=0):
     logging.info("updating: %d %d" % (fid, index))
     wfile = WordLoad.objects.get(pk=fid)
-    logging.info(wfile.hash)
     dicts = Dictionary.objects.all()
     dictionaries = {}
     for d in dicts:
         dictionaries[d.abbrev] = d
+
+    profile = wfile.contributor.get_or_create_profile()
 
     try:
         word_file = json.loads(wfile.file)
@@ -180,6 +180,9 @@ def add_words_from_file(fid, index=0):
     except Exception, e:
         logging.warning(e)
         logging.info('%s %d' % wfile.contributor.username, wfile.pk)
+
+    profile.number_words += counter - index
+    profile.save()
 
     logging.info(counter)
 
