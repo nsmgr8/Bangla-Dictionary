@@ -18,9 +18,12 @@ from django.conf.urls.defaults import *
 from django.contrib import admin
 admin.autodiscover()
 
+from bangladict.models import Dictionary
+
 urlpatterns = patterns('',
     (r'^$', 'django.views.generic.simple.direct_to_template',
-     {'template': 'index.html'}),
+     {'template': 'index.html',
+      'extra_context': {'dict': Dictionary.objects.all}}),
     (r'^accounts/', include('gaeauth.urls')),
     (r'^admin/', include(admin.site.urls)),
     (r'^dictionary/', include('bangladict.urls')),

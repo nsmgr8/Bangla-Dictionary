@@ -18,6 +18,7 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('bangladict.views',
     url(r'^$', 'dictionary_list', name='dict_list'),
+    url(r'^search/$', 'word_search', name='dict_word_search'),
     url(r'^bulk/load/$', 'bulk_load', name='dict_bulk_load'),
     url(r'^accept_word/(?P<wid>\d+)/(?P<status>(accept|reject))/$',
         'word_accept', name='dict_word_accept'),

@@ -72,6 +72,15 @@ def word_detail(request, dict_abbrev, word):
     return object_list(request, words, template_object_name='word',
                        extra_context=context)
 
+def word_search(request):
+    abbrev = request.GET.get('dict', None)
+    word = request.GET.get('word', None)
+    if not all([abbrev, word]):
+        raise Http404
+
+    return HttpResponseRedirect(reverse('dict_word_detail', args=[abbrev,
+                                                                  word]))
+
 @csrf_protect
 @login_required
 def word_edit(request, dict_abbrev, wid=None):

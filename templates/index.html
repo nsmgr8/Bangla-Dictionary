@@ -7,4 +7,13 @@ database. You are very much welcome to take a part in this effort. Please take
 some time to explore this site and contribute. This project started from the
 <a href="http://forum.projanmo.com/topic20257.html">discussion</a> at the projanmo forum.</p>
 <p>Thanks</p>
+<form action="{% url dict_word_search %}" method="GET">
+	<select name="dict" id="id_dict">
+		{% for d in dict %}
+		<option value="{{ d.abbrev }}">{{ d.name }}</option>
+		{% endfor %}
+	</select>
+	<input type="text" name="word" id="id_word" />
+	<input type="submit" value="Search" />
+</form>
 {% endblock %}
