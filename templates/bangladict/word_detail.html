@@ -1,24 +1,25 @@
 {% extends "base.html" %}
-{% load comments %}
-{% block title %}Word: {{ word.original }}{% endblock %}
+{% load comments i18n %}
+{% block title %}{% trans "Word" %}: {{ word.original }}{% endblock %}
 {% block extra_head %}
 <style>
 	label, #id_name, #id_email, #id_url { display: none; }
 </style>
 {% endblock %}
 {% block content %}
-<h1>Word: {{ word.original }}</h1>
+<h1>{% trans "Word" %}: {{ word.original }}</h1>
 [{{ word.phoneme }}] ({{ word.pos }}) {{ word.translation }}
 <p>{{ word.description }}</p>
-<p><b>Synonyms:</b> {{ word.synonyms }}</p>
-<p><b>Antonyms:</b> {{ word.antonys }}</p>
-<p>Added by {{ word.contributor.display_name }}</p>
+<p><b>{% trans "Synonyms" %}:</b> {{ word.synonyms }}</p>
+<p><b>{% trans "Antonyms" %}:</b> {{ word.antonys }}</p>
+<p>{% trans "Added by" %} {{ word.contributor.display_name }}</p>
 {% ifequal user word.contributor %}
-<a href="{% url dict_word_edit word.dictionary.abbrev,word.pk %}">Edit</a>
+<a href="{% url dict_word_edit word.dictionary.abbrev,word.pk %}">
+	{%trans "Edit" %}</a>
 {% endifequal %}
-<h2>Comments</h2>
+<h2>{% trans "Comments" %}</h2>
 {% render_comment_list for word %}
-<h2>Post your comment</h2>
+<h2>{% trans "Post your comment" %}</h2>
 {% if user.is_authenticated %}
 {% render_comment_form for word %}
 {% endif %}

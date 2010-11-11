@@ -8,6 +8,17 @@ except ImportError:
 
 import os
 
+USE_I18N = True
+gettext = lambda s: s
+
+LANGUAGE_CODE = 'bn'
+
+LANGUAGES = (
+    ('bn', gettext('Bangla')),
+    #('en', gettext('English')),
+)
+
+
 INSTALLED_APPS = (
     'djangotoolbox',
     'django.contrib.auth',
@@ -37,8 +48,9 @@ AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',
                            'gaeauth.backends.GoogleAccountBackend',)
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',

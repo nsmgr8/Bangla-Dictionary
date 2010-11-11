@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-{% load dict_tags pagination_tags %}
-{% block title %}List{% endblock %}
+{% load dict_tags pagination_tags i18n %}
+{% block title %}{% trans "List" %}{% endblock %}
 {% block content %}
 <h1>
 	<a href="{% url dict_word_list dictionary.abbrev %}">{{ dictionary.name }}</a>
@@ -10,7 +10,8 @@
 	<li><a href="{% url dict_word_list_alpha dictionary.abbrev,alpha %}">{{ alpha }}</a></li>
 	{% endfor %}
 </ul>
-<p><a href="{% url dict_word_create dictionary.abbrev %}">Add a new word</a></p>
+<p><a href="{% url dict_word_create dictionary.abbrev %}">
+	{% trans "Add a new word" %}</a></p>
 {% regroup word_list by original as words %}
 <dl class="word-list">
 	{% for word in words %}
@@ -26,32 +27,33 @@
 		{% endfor %}
 		<p>{{ item.description }}</p>
 		{% if item.synonyms %}
-		<p><b>Synonyms:</b> {% for synonym in item.synonyms|split:',' %}
+		<p><b>{% trans "Synonyms" %}:</b> {% for synonym in item.synonyms|split:',' %}
 		<a href="{% url dict_word_detail dictionary.abbrev,synonym %}">
 			{{ synonym }}</a>{% if not forloop.last %},{% endif %}
 			{% endfor %}</p>
 		{% endif %}
 		{% if item.antonyms %}
-		<p><b>Antonyms:</b> {% for antonym in item.antonyms|split:',' %}
+		<p><b>{% trans "Antonyms" %}:</b> {% for antonym in item.antonyms|split:',' %}
 		<a href="{% url dict_word_detail dictionary.abbrev,antonym %}">
 			{{ antonym }}</a>{% if not forloop.last %},{% endif %}
 			{% endfor %}</p>
 		{% endif %}
 		{% ifnotequal item.status 1 %}
-		<p><a href="{% url dict_word_comments item.pk %}">Comments</a>
+		<p><a href="{% url dict_word_comments item.pk %}">{% trans "Comments" %}</a>
 		{% ifequal user item.contributor %}
-		<a href="{% url dict_word_edit item.dictionary.abbrev,item.pk %}">Edit</a>
+		<a href="{% url dict_word_edit item.dictionary.abbrev,item.pk %}">
+			{% trans "Edit" %}</a>
 		{% endifequal %}</p>
 		{% if user.is_staff %}
-		<a href="{% url dict_word_accept item.pk,'accept' %}">Accept</a>
-		<a href="{% url dict_word_accept item.pk,'reject' %}">Reject</a>
+		<a href="{% url dict_word_accept item.pk,'accept' %}">{% trans "Accept" %}</a>
+		<a href="{% url dict_word_accept item.pk,'reject' %}">{% trans "Reject" %}</a>
 		{% endif %}
 		{% endifnotequal %}
 		</li>
 		{% endfor %}
 	</ul></dd>
 	{% empty %}
-	No word found!
+	{% trans "No word found!" %}
 	{% endfor %}
 </dl>
 {% if is_paginated %}

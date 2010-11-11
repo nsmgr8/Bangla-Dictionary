@@ -1,31 +1,32 @@
 {% extends "base.html" %}
-{% block title %}Profile{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Profile" %}{% endblock %}
 {% block content %}
-<h1>Edit your profile</h1>
+<h1>{% trans "Edit your profile" %}</h1>
 <form method="POST" action="">{% csrf_token %}
 	<table>
-		<tr><th>Username</th><td>{{ user.username }}</td></tr>
-		<tr><th>Full name</th><td>{{ form.fullname }}</td></tr>
-		<tr><th>Email</th><td>{{ user.email }}</td></tr>
-		<tr><th>Joined on</th><td>{{ user.date_joined }}</td></tr>
-		<tr><th>Website</th><td>{{ form.website }}</td></tr>
-		<tr><th>Instant messenger IDs</th><td>{{ form.ims }}</td></tr>
-		<tr><th>Accepted words</th><td>{{ profile.number_accepted }}</td></tr>
-		<tr><th>Total contributed words</th><td>{{ profile.number_words }}</td></tr>
-		<tr><th>Currently working on</th><td>
+		<tr><th>{% trans "Username" %}</th><td>{{ user.username }}</td></tr>
+		<tr><th>{% trans "Full name" %}</th><td>{{ form.fullname }}</td></tr>
+		<tr><th>{% trans "Email" %}</th><td>{{ user.email }}</td></tr>
+		<tr><th>{% trans "Joined on" %}</th><td>{{ user.date_joined }}</td></tr>
+		<tr><th>{% trans "Website" %}</th><td>{{ form.website }}</td></tr>
+		<tr><th>{% trans "Instant messenger IDs" %}</th><td>{{ form.ims }}</td></tr>
+		<tr><th>{% trans "Accepted words" %}</th><td>{{ profile.number_accepted }}</td></tr>
+		<tr><th>{% trans "Total contributed words" %}</th><td>{{ profile.number_words }}</td></tr>
+		<tr><th>{% trans "Currently working on" %}</th><td>
 				<select name="dictionary">
-					<option value="">Please select one</option>
+					<option value="">{% trans "Please select one" %}</option>
 					<option value="">=================</option>
 					{% for d in dictionaries %}
 					<option value="{{ d.abbrev }}">{{ d.name }}</option>
 					{% endfor %}
 				</select>
-				<label for="id_from">from</label>
+				<label for="id_from">{% trans "from" %}</label>
 				<input type="text" name="from" id="id_from" value="{{ from }}"/>
-				<label for="id_to">to</label>
+				<label for="id_to">{% trans "to" %}</label>
 				<input type="text" name="to" id="id_to" value="{{ to }}"/>
 		</td></tr>
 </table>
-<input type="submit" name="submit" value="Submit" />
+<input type="submit" name="submit" value="{% trans "Submit" %}" />
 </form>
 {% endblock %}

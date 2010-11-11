@@ -1,8 +1,9 @@
 {% extends "base.html" %}
-{% load dict_tags %}
+{% load dict_tags i18n %}
 {% block title %}{{ dictionary.abbrev }}{% endblock %}
 {% block content %}
-<h1>{{ dictionary }}: <u>{% if word %}Edit {{ word }}{% else %}Create new{% endif %}</u></h1>
+<h1>{{ dictionary }}: <u>{% if word %}{% trans "Edit" %} {{ word }}{% else %}
+		{% trans "Create new" %}{% endif %}</u></h1>
 <form method="post" action="">{% csrf_token %}
 	<table>
 		{% for field in form %}
@@ -15,7 +16,7 @@
 		</th>
 		{% ifequal field.name "pos" %}
 			<td><select name="pos" id="id_pos">
-				<option value="">Please select one</option>
+					<option value="">{% trans "Please select one" %}</option>
 				{{ dictionary.pos|split_as_option:',' }}
 			</select></td>
 		{% else %}
@@ -25,6 +26,6 @@
 	  </tr>
 		{% endfor %}
 	</table>
-	<input type="submit" name="Submit" value="Submit" />
+	<input type="submit" name="Submit" value="{% trans "Submit" %}" />
 </form>
 {% endblock %}

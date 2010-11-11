@@ -17,18 +17,22 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from django.utils.translation import ugettext_lazy as _
+
 
 class Dictionary(models.Model):
-    name = models.CharField(max_length=200)
-    source_language = models.CharField(max_length=200)
-    target_language = models.CharField(max_length=200)
-    abbrev = models.CharField(max_length=10)
-    pos = models.TextField(verbose_name='Parts of Speech')
-    alphabets = models.TextField()
+    name = models.CharField(max_length=200, verbose_name=_("Name"))
+    source_language = models.CharField(max_length=200,
+                                       verbose_name=_("Source Language"))
+    target_language = models.CharField(max_length=200,
+                                      verbose_name=_("Target Language"))
+    abbrev = models.CharField(max_length=10, verbose_name=_("Abbreviation"))
+    pos = models.TextField(verbose_name=_('Parts of Speech'))
+    alphabets = models.TextField(verbose_name=_('Alphabets'))
 
     class Meta:
-        verbose_name = 'Dictionary'
-        verbose_name_plural = 'Dictionaries'
+        verbose_name = _('Dictionary')
+        verbose_name_plural = _('Dictionaries')
 
     def __unicode__(self):
         return '%s (%s)' % (self.name, self.abbrev)
@@ -39,31 +43,38 @@ class Dictionary(models.Model):
         return "%s2%s" % (d[-1], d[0])
 
 NEW, ACCEPTED, REJECTED, CLOSED = 0, 1, 2, 3
-EDIT_STATES = [(NEW, 'New'), (ACCEPTED, 'Accepted'), (REJECTED, 'Rejected'),
-               (CLOSED, 'Closed')]
+EDIT_STATES = [(NEW, _('New')), (ACCEPTED, _('Accepted')),
+               (REJECTED, _('Rejected')), (CLOSED, _('Closed'))]
 
 class Word(models.Model):
-    dictionary = models.ForeignKey(Dictionary)
-    alpha = models.CharField(max_length=5)
-    original = models.CharField(max_length=50)
-    translation = models.CharField(max_length=50)
-    phoneme = models.CharField(max_length=70, blank=True)
-    pos = models.CharField(max_length=50, verbose_name='Parts of Speech')
-    description = models.TextField(blank=True)
-    synonyms = models.CharField(max_length=500, blank=True)
-    antonyms = models.CharField(max_length=500, blank=True)
-    contributor = models.ForeignKey(User)
-    status = models.IntegerField(default=NEW, choices=EDIT_STATES)
-    added_at = models.DateTimeField(auto_now_add=True)
+    dictionary = models.ForeignKey(Dictionary, verbose_name=_('Dictionary'))
+    alpha = models.CharField(max_length=5, verbose_name=_('alpha'))
+    original = models.CharField(max_length=50, verbose_name=_('Original'))
+    translation = models.CharField(max_length=50,
+                                   verbose_name=_('Translation'))
+    phoneme = models.CharField(max_length=70, blank=True,
+                               verbose_name=_('Phoneme'))
+    pos = models.CharField(max_length=50, verbose_name=_('Parts of Speech'))
+    description = models.TextField(blank=True, verbose_name=_('Description'))
+    synonyms = models.CharField(max_length=500, blank=True,
+                                verbose_name=_('Synonyms'))
+    antonyms = models.CharField(max_length=500, blank=True,
+                                verbose_name=_('Antonyms'))
+    contributor = models.ForeignKey(User, verbose_name=_('Contributor'))
+    status = models.IntegerField(default=NEW, choices=EDIT_STATES,
+                                 verbose_name=_('Status'))
+    added_at = models.DateTimeField(auto_now_add=True,
+                                    verbose_name=_('Added at'))
 
     def __unicode__(self):
         return '%s -> %s' % (self.original, self.translation)
 
 class WordLoad(models.Model):
-    contributor = models.ForeignKey(User)
-    uploaded_at = models.DateTimeField(auto_now_add=True)
-    hash = models.CharField(max_length=256)
-    file = models.TextField()
+    contributor = models.ForeignKey(User, verbose_name=_('Contributor'))
+    uploaded_at = models.DateTimeField(auto_now_add=True,
+                                       verbose_name=_('Uploaded at'))
+    hash = models.CharField(max_length=256, verbose_name=_('Hash'))
+    file = models.TextField(verbose_name=_('File'))
 
     def __unicode__(self):
         return self.file[:20]

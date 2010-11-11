@@ -1,14 +1,14 @@
 {% extends "base.html" %}
-{% load pagination_tags %}
-{% block title %}Contributors{% endblock %}
+{% load pagination_tags i18n %}
+{% block title %}{% trans "Contributors" %}{% endblock %}
 {% block content %}
-<h1>Contributors</h1>
+<h1>{% trans "Contributors" %}</h1>
 <table>
 	<tr>
-		<th>Contributor</th>
-		<th>Accepted words</th>
-		<th>Total words</th>
-		<th>Currently working</th>
+		<th>{% trans "Contributor" %}</th>
+		<th>{% trans "Accepted words" %}</th>
+		<th>{% trans "Total words" %}</th>
+		<th>{% trans "Currently working" %}</th>
 	</tr>
 	{% for contrib in contributor_list %}
 	<tr>

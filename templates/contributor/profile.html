@@ -1,20 +1,21 @@
 {% extends "base.html" %}
-{% block title %}Profile {{ profile.user.display_name }}{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Profile" %} {{ profile.user.display_name }}{% endblock %}
 {% block content %}
-<h1>Profile: {{ profile.user.display_name }}</h1>
+<h1>{% trans "Profile" %}: {{ profile.user.display_name }}</h1>
 <table>
-	<tr><th>Username</th><td>{{ profile.user.username }}</td></tr>
-	<tr><th>Full name</th><td>{{ profile.user.first_name }}</td></tr>
+	<tr><th>{% trans "Username" %}</th><td>{{ profile.user.username }}</td></tr>
+	<tr><th>{% trans "Full name" %}</th><td>{{ profile.user.first_name }}</td></tr>
 	{% if user.is_staff %}
-	<tr><th>Email</th><td>{{ profile.user.email }}</td></tr>
+	<tr><th>{% trans "Email" %}</th><td>{{ profile.user.email }}</td></tr>
 	{% endif %}
-	<tr><th>Joined on</th><td>{{ profile.user.date_joined }}</td></tr>
-	<tr><th>Website</th><td>{{ profile.website }}</td></tr>
+	<tr><th>{% trans "Joined on" %}</th><td>{{ profile.user.date_joined }}</td></tr>
+	<tr><th>{% trans "Website" %}</th><td>{{ profile.website }}</td></tr>
 	{% if user.is_authenticated %}
-	<tr><th>Instant messenger IDs</th><td>{{ profile.ims }}</td></tr>
+	<tr><th>{% trans "Instant messenger IDs" %}</th><td>{{ profile.ims }}</td></tr>
 	{% endif %}
-	<tr><th>Accepted words</th><td>{{ profile.number_accepted }}</td></tr>
-	<tr><th>Total contributed words</th><td>{{ profile.number_words }}</td></tr>
-	<tr><th>Currently working on</th><td>{{ profile.current_work }}</td></tr>
+	<tr><th>{% trans "Accepted words" %}</th><td>{{ profile.number_accepted }}</td></tr>
+	<tr><th>{% trans "Total contributed words" %}</th><td>{{ profile.number_words }}</td></tr>
+	<tr><th>{% trans "Currently working on" %}</th><td>{{ profile.current_work }}</td></tr>
 </table>
 {% endblock %}

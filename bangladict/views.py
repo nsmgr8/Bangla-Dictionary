@@ -60,6 +60,7 @@ def word_list(request, dict_abbrev, alpha=None, status='accepted'):
     return object_list(request, words, template_object_name='word',
                        paginate_by=50, extra_context=context)
 
+@login_required
 def word_comments(request, wid):
     word = get_object_or_404(Word, pk=wid)
     return render_to_response('bangladict/word_detail.html', {'word': word},
@@ -149,18 +150,18 @@ def bulk_load(request):
                 hash = hashlib.sha1(current).hexdigest()
 
                 if WordLoad.objects.filter(hash=hash).count() > 0:
-                    msg = 'Already uploaded this file'
+                    msg = _('Already uploaded this file')
                 else:
                     wfile = WordLoad(file=current, contributor=request.user,
                                      hash=hash)
                     wfile.save()
                     deferred.defer(add_words_from_file, wfile.pk)
-                    msg = 'Thanks for the input. It will be added to the database soon'
+                    msg = _('Thanks for the input. It will be added to the database soon')
             except Exception, e:
                 logging.info(e)
-                msg = 'Could not save this file.'
+                msg = _('Could not save this file.')
         else:
-            msg = 'No file uploaded. Please select a file to upload'
+            msg = _('No file uploaded. Please select a file to upload')
 
         context = {'load_message': msg}
 

@@ -1,17 +1,19 @@
 {% extends "base.html" %}
-{% load pagination_tags %}
-{% block title %}Dictionaries{% endblock %}
+{% load pagination_tags i18n %}
+{% block title %}{% trans "Dictionaries" %}{% endblock %}
 {% block content %}
-<h1>Dictionaries</h1>
+<h1>{% trans "Dictionaries" %}</h1>
 <ul>
 	{% for dictionary in dictionary_list %}
 	<li>
 	<a href="{% url dict_word_list dictionary.abbrev %}">{{ dictionary.name }}</a>
 	{% if user.is_authenticated %}
-	<a href="{% url dict_word_list_status dictionary.abbrev,'new' %}">New words</a>
+	<a href="{% url dict_word_list_status dictionary.abbrev,'new' %}">
+		{% trans "New words" %}</a>
 	{% endif %}
 	{% if user.is_staff %}
-	<a href="{% url dict_word_list_status dictionary.abbrev,'rejected' %}">Rejected</a>
+	<a href="{% url dict_word_list_status dictionary.abbrev,'rejected' %}">
+		{% trans "Rejected" %}</a>
 	{% endif %}
 	</li>
 	{% endfor %}
