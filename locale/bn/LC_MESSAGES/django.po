@@ -1,0 +1,382 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-11-11 13:32-0600\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: settings.py:17
+msgid "Bangla"
+msgstr "বাংলা"
+
+#: settings.py:18
+msgid "English"
+msgstr "ইংরেজী"
+
+#: bangladict/models.py:24
+msgid "Name"
+msgstr "নাম"
+
+#: bangladict/models.py:26
+msgid "Source Language"
+msgstr "মূল ভাষা"
+
+#: bangladict/models.py:28
+msgid "Target Language"
+msgstr "অনুদিত ভাষা"
+
+#: bangladict/models.py:29
+msgid "Abbreviation"
+msgstr "সংক্ষেপণ"
+
+#: bangladict/models.py:30 bangladict/models.py:57
+msgid "Parts of Speech"
+msgstr "পদ"
+
+#: bangladict/models.py:31
+msgid "Alphabets"
+msgstr "বর্ণ"
+
+#: bangladict/models.py:34 bangladict/models.py:50
+msgid "Dictionary"
+msgstr "অভিধান"
+
+#: bangladict/models.py:35 templates/base.html:39
+#: templates/bangladict/dictionary_list.html:3
+#: templates/bangladict/dictionary_list.html:5
+msgid "Dictionaries"
+msgstr "অভিধান তালিকা"
+
+#: bangladict/models.py:46
+msgid "New"
+msgstr ""
+
+#: bangladict/models.py:46
+msgid "Accepted"
+msgstr "গৃহীত"
+
+#: bangladict/models.py:47 templates/bangladict/dictionary_list.html:16
+msgid "Rejected"
+msgstr "বাতিল"
+
+#: bangladict/models.py:47
+msgid "Closed"
+msgstr "বন্ধ"
+
+#: bangladict/models.py:51
+msgid "alpha"
+msgstr "বর্ণ"
+
+#: bangladict/models.py:52
+msgid "Original"
+msgstr "মূল"
+
+#: bangladict/models.py:54
+msgid "Translation"
+msgstr "অর্থ"
+
+#: bangladict/models.py:56
+msgid "Phoneme"
+msgstr "উচ্চারণ"
+
+#: bangladict/models.py:58
+msgid "Description"
+msgstr "বর্ণনা"
+
+#: bangladict/models.py:60 templates/bangladict/word_detail.html:13
+#: templates/bangladict/word_list.html:30
+msgid "Synonyms"
+msgstr "সমার্থক শব্দ"
+
+#: bangladict/models.py:62 templates/bangladict/word_detail.html:14
+#: templates/bangladict/word_list.html:36
+msgid "Antonyms"
+msgstr "বিপরীত শব্দ"
+
+#: bangladict/models.py:63 bangladict/models.py:73
+#: templates/contributor/contributor_list.html:8
+msgid "Contributor"
+msgstr "প্রদায়ক"
+
+#: bangladict/models.py:65
+msgid "Status"
+msgstr "অবস্থা"
+
+#: bangladict/models.py:67
+msgid "Added at"
+msgstr "সময়"
+
+#: bangladict/models.py:75
+msgid "Uploaded at"
+msgstr "আপলোডের সময়"
+
+#: bangladict/models.py:76
+msgid "Hash"
+msgstr ""
+
+#: bangladict/models.py:77 templates/bangladict/bulk_load.html:11
+msgid "File"
+msgstr "ফাইল"
+
+#: bangladict/views.py:153
+msgid "Already uploaded this file"
+msgstr "এই ফাইলটি ইতোমধ্যে সংরক্ষণ করা হয়েছে।"
+
+#: bangladict/views.py:159
+msgid "Thanks for the input. It will be added to the database soon"
+msgstr "ধন্যবাদ। শব্দগুলো যথাসময়ে সংরক্ষিত হবে।"
+
+#: bangladict/views.py:162
+msgid "Could not save this file."
+msgstr "এই ফাইলটি সংরক্ষণ করা সম্ভব হয়নি।"
+
+#: bangladict/views.py:164
+msgid "No file uploaded. Please select a file to upload"
+msgstr "কোন ফাইল দেয়া হয়নি। অনুগ্রহ করে একটি ফাইল দিন।"
+
+#: templates/404.html:3
+msgid "Page not found"
+msgstr "পাতা নিখোঁজ"
+
+#: templates/404.html:6
+msgid "The page you requested could not be found."
+msgstr "অনুরোধকৃত পাতাটি পাওয়া যায়নি"
+
+#: templates/500.html:3
+msgid "Server error"
+msgstr "সার্ভার সমস্যা"
+
+#: templates/500.html:5
+msgid "There was an error while handling your request."
+msgstr "সার্ভারে বিঘ্ন ঘটায় আপনার অনুরোধটি সম্পন্ন করা সম্ভব হয়নি।"
+
+#: templates/base.html:6 templates/base.html.py:17 templates/index.html:5
+msgid "Bangla Dictionary"
+msgstr "বাংলা অভিধান"
+
+#: templates/base.html:30
+msgid "Welcome"
+msgstr "স্বাগতম"
+
+#: templates/base.html:31
+msgid "Logout"
+msgstr "লগআউট"
+
+#: templates/base.html:34
+msgid "Login with your Google Account"
+msgstr "আপনার গুগল একাউন্ট দিয়ে লগইন করুন"
+
+#: templates/base.html:37 templates/index.html:3
+msgid "Home"
+msgstr "নীড়পাতা"
+
+#: templates/base.html:41 templates/contributor/contributor_list.html:3
+#: templates/contributor/contributor_list.html:5
+msgid "Contributors"
+msgstr "প্রদায়ক"
+
+#: templates/base.html:44 templates/contributor/edit.html:3
+#: templates/contributor/profile.html:3 templates/contributor/profile.html:5
+msgid "Profile"
+msgstr "প্রোফাইল"
+
+#: templates/base.html:47 templates/bangladict/bulk_load.html:3
+msgid "Upload"
+msgstr "আপলোড"
+
+#: templates/base.html:50
+msgid "Bug/Feature"
+msgstr ""
+
+#: templates/base.html:55
+msgid ""
+"This is an open-source project. The resultant database will\n"
+"\t\t\tbe open and free to everyone for use. <br />\n"
+"\t\t\tThis site is also an open source codebase hosted at\n"
+"\t\t \t<a href=\"http://github.com/nsmgr8/Bangla-Dictionary\">GitHub</a>. "
+"<br />\n"
+"\t\t\tCopyright &copy; BengDict Project 2010."
+msgstr ""
+
+#: templates/index.html:6
+msgid ""
+"<p>Welcome to Bangla dictionary project! Currently it is going under "
+"building\n"
+"database. You are very much welcome to take a part in this effort. Please "
+"take\n"
+"some time to explore this site and contribute. This project started from "
+"the\n"
+"<a href=\"http://forum.projanmo.com/topic20257.html\">discussion</a> at the "
+"projanmo forum.</p>\n"
+"<p>Thanks</p>"
+msgstr ""
+
+#: templates/index.html:18
+msgid "Search"
+msgstr "খুঁজুন"
+
+#: templates/bangladict/bulk_load.html:5
+msgid "Upload words"
+msgstr "শব্দ আপলোড করুন"
+
+#: templates/bangladict/bulk_load.html:6
+msgid ""
+"Here you can load a file with word definitions. Currently json formatted\n"
+"files are supported."
+msgstr ""
+
+#: templates/bangladict/bulk_load.html:14
+#: templates/bangladict/word_edit.html:29 templates/contributor/edit.html:30
+msgid "Submit"
+msgstr "প্রকাশ করুন"
+
+#: templates/bangladict/dictionary_list.html:12
+msgid "New words"
+msgstr "নতুন শব্দ"
+
+#: templates/bangladict/word_detail.html:3
+#: templates/bangladict/word_detail.html:10
+msgid "Word"
+msgstr "শব্দ"
+
+#: templates/bangladict/word_detail.html:15
+msgid "Added by"
+msgstr "সংকলনে"
+
+#: templates/bangladict/word_detail.html:18
+#: templates/bangladict/word_edit.html:5
+#: templates/bangladict/word_list.html:45
+msgid "Edit"
+msgstr "সম্পাদনা"
+
+#: templates/bangladict/word_detail.html:20
+#: templates/bangladict/word_list.html:42
+msgid "Comments"
+msgstr "মন্তব্য"
+
+#: templates/bangladict/word_detail.html:22 templates/comments/preview.html:16
+msgid "Post your comment"
+msgstr "আপনার মন্তব্য প্রকাশ করুন"
+
+#: templates/bangladict/word_edit.html:6
+msgid "Create new"
+msgstr "নতুন শব্দ যোগ করুন"
+
+#: templates/bangladict/word_edit.html:19 templates/contributor/edit.html:18
+msgid "Please select one"
+msgstr "অনুগ্রহপূর্বক একটি বাছাই করুন"
+
+#: templates/bangladict/word_list.html:3
+msgid "List"
+msgstr "তালিকা"
+
+#: templates/bangladict/word_list.html:14
+msgid "Add a new word"
+msgstr "নতুন শব্দ যোগ করুন"
+
+#: templates/bangladict/word_list.html:48
+msgid "Accept"
+msgstr "গ্রহণ করুন"
+
+#: templates/bangladict/word_list.html:49
+msgid "Reject"
+msgstr "বাতিল করুন"
+
+#: templates/bangladict/word_list.html:56
+msgid "No word found!"
+msgstr "কোন শব্দ পাওয়া যায়নি!"
+
+#: templates/comments/form.html:18 templates/comments/preview.html:32
+msgid "Post"
+msgstr "প্রকাশ করুন"
+
+#: templates/comments/preview.html:4 templates/comments/preview.html.py:13
+msgid "Preview your comment"
+msgstr "প্রিভিউ দেখুন"
+
+#: templates/comments/preview.html:11
+msgid "Please correct the error below"
+msgid_plural "Please correct the errors below"
+msgstr[0] "অনুগ্রহ করে নিম্নোক্ত সমস্যাগুলো সঠিক করুন"
+msgstr[1] ""
+
+#: templates/comments/preview.html:16
+msgid "and"
+msgstr "এবং"
+
+#: templates/comments/preview.html:16
+msgid "or make changes"
+msgstr "অথবা বদলান"
+
+#: templates/comments/preview.html:33
+msgid "Preview"
+msgstr "প্রিভিউ"
+
+#: templates/contributor/contributor_list.html:9
+#: templates/contributor/edit.html:14 templates/contributor/profile.html:17
+msgid "Accepted words"
+msgstr "শব্দসংখ্যা"
+
+#: templates/contributor/contributor_list.html:10
+msgid "Total words"
+msgstr "সর্বমোট শব্দসংখ্যা"
+
+#: templates/contributor/contributor_list.html:11
+msgid "Currently working"
+msgstr "বর্তমানে কাজ করছেন"
+
+#: templates/contributor/edit.html:5
+msgid "Edit your profile"
+msgstr "আপনার প্রোফাইল সম্পাদন করুন"
+
+#: templates/contributor/edit.html:8 templates/contributor/profile.html:7
+msgid "Username"
+msgstr "সদস্যনাম"
+
+#: templates/contributor/edit.html:9 templates/contributor/profile.html:8
+msgid "Full name"
+msgstr "পুরো নাম"
+
+#: templates/contributor/edit.html:10 templates/contributor/profile.html:10
+msgid "Email"
+msgstr "ইমেইল"
+
+#: templates/contributor/edit.html:11 templates/contributor/profile.html:12
+msgid "Joined on"
+msgstr "যোগদানের সময়"
+
+#: templates/contributor/edit.html:12 templates/contributor/profile.html:13
+msgid "Website"
+msgstr "ওয়েবসাইট"
+
+#: templates/contributor/edit.html:13 templates/contributor/profile.html:15
+msgid "Instant messenger IDs"
+msgstr "ম্যাসেঞ্জার আইডি"
+
+#: templates/contributor/edit.html:15 templates/contributor/profile.html:18
+msgid "Total contributed words"
+msgstr "সর্বমোট শব্দ সংখ্যা"
+
+#: templates/contributor/edit.html:16 templates/contributor/profile.html:19
+msgid "Currently working on"
+msgstr "বর্তমানে কাজ করছেন"
+
+#: templates/contributor/edit.html:24
+msgid "from"
+msgstr "শুরু"
+
+#: templates/contributor/edit.html:26
+msgid "to"
+msgstr "পর্যন্ত"
