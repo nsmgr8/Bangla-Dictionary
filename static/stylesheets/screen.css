@@ -5,6 +5,7 @@ font: bold 11px verdana, arial, sans-serif; /* set font as desired */
 border-bottom: 1px solid #6c6; /* set border COLOR as desired */
 list-style-type: none;
 padding: 3px 10px 3px 10px; /* THIRD number must change with respect to padding-top (X) below */
+clear: both;
 }
 
 ul#tabnav li, ul.alpha-list li { /* do not change */
@@ -42,6 +43,7 @@ div#site-title {
 
 div#auth {
 	float: right;
+	clear: right;
 }
 
 .word-list dd {
@@ -63,4 +65,9 @@ th, td {
 
 #footer a {
 	color: #555;
+}
+
+form#lang_change {
+	float: right;
+	clear: right;
 }

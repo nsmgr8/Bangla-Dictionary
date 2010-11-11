@@ -14,6 +14,14 @@
 		{% block extra_head %}{% endblock %}
 	</head>
 	<body>
+		<form action="/i18n/setlang/" method="post" id="lang_change">{% csrf_token %}
+			<select name="language">
+				{% for lang in LANGUAGES %}
+				<option value="{{ lang.0 }}">{{ lang.1 }}</option>
+				{% endfor %}
+			</select>
+			<input type="submit" value="{% trans "Go" %}" />
+		</form>
 		<div id="site-title">{% trans "Bangla Dictionary" %}</div>
 		<div id="auth">{% if user.is_authenticated %}
 			{% trans "Welcome" %} {{ user.username }}. <a href="{% url google_logout %}">

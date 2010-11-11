@@ -9,13 +9,13 @@ except ImportError:
 import os
 
 USE_I18N = True
-gettext = lambda s: s
+_ = lambda s: s
 
 LANGUAGE_CODE = 'bn'
 
 LANGUAGES = (
-    ('bn', gettext('Bangla')),
-    #('en', gettext('English')),
+    ('bn', _('Bengali')),
+    ('en', _('English')),
 )
 
 
