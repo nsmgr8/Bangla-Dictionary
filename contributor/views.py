@@ -36,6 +36,9 @@ def contributor_list(request):
 
 @login_required
 def contributor_edit(request):
+    if not request.user.is_active or request.user.is_superuser:
+        raise Http404
+
     profile = request.user.get_or_create_profile()
     working = profile.working_on.split('::')
     abbrev, frm, to = working if len(working) == 3 else [None] * 3
@@ -72,6 +75,9 @@ def contributor_edit(request):
 
 def contributor_profile(request, username):
     user = get_object_or_404(User, username=username)
+    if user.is_superuser:
+        raise Http404
+
     if user == request.user:
         return HttpResponseRedirect(reverse('contributor_edit'))
 

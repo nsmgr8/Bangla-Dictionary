@@ -62,6 +62,9 @@ def word_list(request, dict_abbrev, alpha=None, status='accepted'):
 
 @login_required
 def word_comments(request, wid):
+    if not request.user.is_active:
+        raise Http404
+
     word = get_object_or_404(Word, pk=wid)
     return render_to_response('bangladict/word_detail.html', {'word': word},
                               RequestContext(request))
@@ -85,6 +88,9 @@ def word_search(request):
 @csrf_protect
 @login_required
 def word_edit(request, dict_abbrev, wid=None):
+    if not request.user.is_active:
+        raise Http404
+
     dictionary = get_object_or_404(Dictionary, abbrev=dict_abbrev)
     if wid:
         word = get_object_or_404(Word, pk=wid)
@@ -140,6 +146,9 @@ def word_accept(request, wid, status):
 @csrf_protect
 @login_required
 def bulk_load(request):
+    if not request.user.is_active:
+        raise Http404
+
     context = None
     if request.method == 'POST':
         f = request.FILES.get('file', None)
