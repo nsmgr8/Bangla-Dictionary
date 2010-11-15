@@ -13,6 +13,9 @@
 <p><a href="{% url dict_word_create dictionary.abbrev %}">
 	{% trans "Add a new word" %}</a></p>
 {% regroup word_list by original as words %}
+{% if user.is_staff %}
+<form action="{% url dict_word_accept %}" method="POST">{% csrf_token %}
+{% endif %}
 <dl class="word-list">
 	{% for word in words %}
 	<dt><a href="{% url dict_word_detail dictionary.abbrev,word.grouper %}">{{ word.grouper }}</a></dt>
@@ -45,8 +48,12 @@
 			{% trans "Edit" %}</a>
 		{% endifequal %}</p>
 		{% if user.is_staff %}
-		<a href="{% url dict_word_accept item.pk,'accept' %}">{% trans "Accept" %}</a>
-		<a href="{% url dict_word_accept item.pk,'reject' %}">{% trans "Reject" %}</a>
+		<label for="accept{{ item.pk }}">
+		<input type="checkbox" name="accept" id="accept{{ item.pk }}"
+		value="{{ item.pk }}" /> {% trans "Accept" %}</label>
+		<label for="reject{{ item.pk }}">
+		<input type="checkbox" name="reject" id="reject{{ item.pk }}"
+		value="{{ item.pk }}" /> {% trans "Reject" %}</label>
 		{% endif %}
 		{% endifnotequal %}
 		</li>
@@ -56,6 +63,10 @@
 	{% trans "No word found!" %}
 	{% endfor %}
 </dl>
+{% if user.is_staff %}
+<input type="submit" value="{% trans "Save" %}"/>
+</form>
+{% endif %}
 {% if is_paginated %}
 {% paginate %}
 {% endif %}

@@ -123,23 +123,36 @@ def word_edit(request, dict_abbrev, wid=None):
                               RequestContext(request))
 
 @login_required
-def word_accept(request, wid, status):
+def word_accept(request):
     if not request.user.is_staff:
         raise Http404
 
-    word = get_object_or_404(Word, pk=wid)
-    current_status = {'accept': ACCEPTED, 'reject': REJECTED}[status]
-    previous_status = word.status
-    word.status = current_status
-    word.save()
+    accepted = set(request.POST.getlist('accept'))
+    rejected = set(request.POST.getlist('reject'))
+    common = accepted.intersection(rejected)
+    accepted = accepted.difference(common)
+    rejected = rejected.difference(common)
 
-    profile = word.contributor.get_or_create_profile()
-    if current_status == ACCEPTED:
+    for wid in accepted:
+        word = get_object_or_404(Word, pk=wid)
+        previous_status = word.status
+        word.status = ACCEPTED
+        word.save()
+
+        profile = word.contributor.get_or_create_profile()
         profile.number_accepted += 1
         profile.save()
-    elif current_status == REJECTED and previous_status == ACCEPTED:
-        profile.number_accepted -= 1
-        profile.save()
+
+    for wid in rejected:
+        word = get_object_or_404(Word, pk=wid)
+        previous_status = word.status
+        word.status = REJECTED
+        word.save()
+
+        profile = word.contributor.get_or_create_profile()
+        if previous_status == ACCEPTED:
+            profile.number_accepted -= 1
+            profile.save()
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
