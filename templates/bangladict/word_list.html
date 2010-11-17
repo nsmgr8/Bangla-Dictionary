@@ -23,20 +23,20 @@
 		{% for item in word.list %}
 		<li>
 		{% ifchanged %}[{{ item.phoneme }}]{% endifchanged %} ({{ item.pos }})
-		{% for translation in item.translation|split:',' %}
+		{% for translation in item.translation|split:';' %}
 		<a href="{% url dict_word_detail dictionary.reverse_dict,translation %}">
 			{{ translation }}{% if not forloop.last %},{% endif %}
 		</a>
 		{% endfor %}
 		<p>{{ item.description }}</p>
 		{% if item.synonyms %}
-		<p><b>{% trans "Synonyms" %}:</b> {% for synonym in item.synonyms|split:',' %}
+		<p><b>{% trans "Synonyms" %}:</b> {% for synonym in item.synonyms|split:';' %}
 		<a href="{% url dict_word_detail dictionary.abbrev,synonym %}">
 			{{ synonym }}</a>{% if not forloop.last %},{% endif %}
 			{% endfor %}</p>
 		{% endif %}
 		{% if item.antonyms %}
-		<p><b>{% trans "Antonyms" %}:</b> {% for antonym in item.antonyms|split:',' %}
+		<p><b>{% trans "Antonyms" %}:</b> {% for antonym in item.antonyms|split:';' %}
 		<a href="{% url dict_word_detail dictionary.abbrev,antonym %}">
 			{{ antonym }}</a>{% if not forloop.last %},{% endif %}
 			{% endfor %}</p>

@@ -1,7 +1,7 @@
 ul#tabnav, ul.alpha-list { /* general settings */
 text-align: left; /* set to left, right or center */
 margin: 1em 0 1em 0; /* set margins as desired */
-font: bold 11px verdana, arial, sans-serif; /* set font as desired */
+font: bold 12px verdana, arial, sans-serif; /* set font as desired */
 border-bottom: 1px solid #6c6; /* set border COLOR as desired */
 list-style-type: none;
 padding: 3px 10px 3px 10px; /* THIRD number must change with respect to padding-top (X) below */
