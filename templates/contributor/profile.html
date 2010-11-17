@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n bangla_tags %}
 {% block title %}{% trans "Profile" %} {{ profile.user.display_name }}{% endblock %}
 {% block content %}
 <h1>{% trans "Profile" %}: {{ profile.user.display_name }}</h1>
@@ -9,13 +9,16 @@
 	{% if user.is_staff %}
 	<tr><th>{% trans "Email" %}</th><td>{{ profile.user.email }}</td></tr>
 	{% endif %}
-	<tr><th>{% trans "Joined on" %}</th><td>{{ profile.user.date_joined }}</td></tr>
+	<tr><th>{% trans "Joined on" %}</th>
+		<td>{{ profile.user.date_joined|date:"DATE_FORMAT"|bangla_numeral }}</td></tr>
 	<tr><th>{% trans "Website" %}</th><td>{{ profile.website }}</td></tr>
 	{% if user.is_authenticated %}
 	<tr><th>{% trans "Instant messenger IDs" %}</th><td>{{ profile.ims }}</td></tr>
 	{% endif %}
-	<tr><th>{% trans "Accepted words" %}</th><td>{{ profile.number_accepted }}</td></tr>
-	<tr><th>{% trans "Total contributed words" %}</th><td>{{ profile.number_words }}</td></tr>
+	<tr><th>{% trans "Accepted words" %}</th>
+		<td>{{ profile.number_accepted|bangla_numeral }}</td></tr>
+	<tr><th>{% trans "Total contributed words" %}</th>
+		<td>{{ profile.number_words|bangla_numeral }}</td></tr>
 	<tr><th>{% trans "Currently working on" %}</th><td>{{ profile.current_work }}</td></tr>
 </table>
 {% endblock %}

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load pagination_tags i18n %}
+{% load pagination_tags i18n bangla_tags %}
 {% block title %}{% trans "Contributors" %}{% endblock %}
 {% block content %}
 <h1>{% trans "Contributors" %}</h1>
@@ -14,8 +14,8 @@
 	<tr>
 		<td><a href="{% url contributor_profile contrib.user.username %}">
 				{{ contrib.user.display_name }}</a></td>
-		<td>{{ contrib.number_accepted }}</td>
-		<td>{{ contrib.number_words }}</td>
+		<td>{{ contrib.number_accepted|bangla_numeral }}</td>
+		<td>{{ contrib.number_words|bangla_numeral }}</td>
 		<td>{{ contrib.current_work }}</td>
 	</tr>
 	{% endfor %}

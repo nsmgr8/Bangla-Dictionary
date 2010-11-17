@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n bangla_tags %}
 {% block title %}{% trans "Profile" %}{% endblock %}
 {% block content %}
 <h1>{% trans "Edit your profile" %}</h1>
@@ -8,11 +8,14 @@
 		<tr><th>{% trans "Username" %}</th><td>{{ user.username }}</td></tr>
 		<tr><th>{% trans "Full name" %}</th><td>{{ form.fullname }}</td></tr>
 		<tr><th>{% trans "Email" %}</th><td>{{ user.email }}</td></tr>
-		<tr><th>{% trans "Joined on" %}</th><td>{{ user.date_joined }}</td></tr>
+		<tr><th>{% trans "Joined on" %}</th>
+			<td>{{ user.date_joined|date:"DATE_FORMAT"|bangla_numeral }}</td></tr>
 		<tr><th>{% trans "Website" %}</th><td>{{ form.website }}</td></tr>
 		<tr><th>{% trans "Instant messenger IDs" %}</th><td>{{ form.ims }}</td></tr>
-		<tr><th>{% trans "Accepted words" %}</th><td>{{ profile.number_accepted }}</td></tr>
-		<tr><th>{% trans "Total contributed words" %}</th><td>{{ profile.number_words }}</td></tr>
+		<tr><th>{% trans "Accepted words" %}</th>
+			<td>{{ profile.number_accepted|bangla_numeral }}</td></tr>
+		<tr><th>{% trans "Total contributed words" %}</th>
+			<td>{{ profile.number_words|bangla_numeral }}</td></tr>
 		<tr><th>{% trans "Currently working on" %}</th><td>
 				<select name="dictionary">
 					<option value="">{% trans "Please select one" %}</option>

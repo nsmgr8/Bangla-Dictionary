@@ -30,6 +30,7 @@ INSTALLED_APPS = (
     'bangladict',
     'contributor',
 
+    'bangla',
     'pagination',
 )
 
