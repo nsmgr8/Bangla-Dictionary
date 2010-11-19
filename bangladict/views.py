@@ -106,7 +106,6 @@ def word_edit(request, dict_abbrev, wid=None):
             entity = form.save(commit=False)
             entity.dictionary = dictionary
             entity.contributor = request.user
-            entity.alpha = entity.original[0]
             entity.save()
             if not word:
                 contrib = request.user.get_or_create_profile()
@@ -215,7 +214,6 @@ def add_words_from_file(fid, index=0):
                 continue
             dictionary = dictionaries[fields['dictionary']]
             word = Word(dictionary=dictionary, contributor=wfile.contributor,
-                        alpha=fields['original'][0],
                         original=fields['original'],
                         translation=fields['translation'],
                         phoneme=fields['phoneme'], pos=fields['pos'],

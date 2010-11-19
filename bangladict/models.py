@@ -69,6 +69,10 @@ class Word(models.Model):
     def __unicode__(self):
         return '%s -> %s' % (self.original, self.translation)
 
+    def save(self, *args, **kwargs):
+        self.alpha = self.original[0].lower()
+        super(Word, self).save(*args, **kwargs)
+
 class WordLoad(models.Model):
     contributor = models.ForeignKey(User, verbose_name=_('Contributor'))
     uploaded_at = models.DateTimeField(auto_now_add=True,
